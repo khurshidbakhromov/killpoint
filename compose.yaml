@@ -4,7 +4,7 @@
 # numbers; the runner discovers them with `docker compose port`.
 services:
   redis:
-    image: redis:7.4.7-alpine
+    image: redis:8.10.2-alpine
     command: ["redis-server", "--save", "", "--appendonly", "no"]
     ports: ["127.0.0.1::6379"]
     labels:
