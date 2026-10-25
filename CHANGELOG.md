@@ -9,6 +9,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 ### Changed
 - Test services: Redis 7.4.7 → 8.10.2 and PostgreSQL 17.7 → 18.6. The PostgreSQL tmpfs moved to `/var/lib/postgresql`, which the 18 image requires.
+- ioredis 5.11.1 → 6.0.0 (BullMQ's Redis client peer dependency).
 - TypeScript 6.0.3 → 7.0.2. Dependabot no longer proposes `@types/node` majors beyond the supported Node 24 (`@types/node` 26 failed typecheck in #3).
 - CI uses `actions/checkout`, `actions/setup-node` and `actions/upload-artifact` v7 (the v4 releases ran on the deprecated Node 20 runtime).
 

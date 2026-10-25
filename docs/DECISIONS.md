@@ -33,7 +33,7 @@ No authorized real application was supplied, so the **reference ledger fixture**
 | Node.js | 24.x (tested 24.21.0) | Handoff default. `engines` is `>=24 <25`; other majors produce a preflight warning, and below 24 is an error. |
 | TypeScript | **7.0.2** (was 6.0.3 until 2026-10-26) | Moved after the full unit, integration and consumer suite passed on 7.0.2 with `@types/node` 24. |
 | BullMQ | 6.4.2 (exact) | Current release. Its stalled-recovery semantics were verified in source and by experiment (below). |
-| ioredis | 5.11.1 | BullMQ 6 makes the Redis client a peer dependency (`ioredis >=5` or `redis >=5`). 5.x is the established line; ioredis 6.0.0 was only 13 days old. |
+| ioredis | **6.0.0** (was 5.11.1 until 2026-10-26) | BullMQ 6 makes the Redis client a peer dependency (`ioredis >=5` or `redis >=5`). It was held at 5.x while 6.0.0 was days old, then taken via Dependabot #4 after the full real-infrastructure CI passed with it (BullMQ uses the hoisted peer, so the worker and observer connections run on 6.0.0). |
 | pg | 8.23.1 | The handoff names the `pg` driver for the reference fixture. |
 | ajv | 8.20.0 | Validates config and report schemas at runtime. |
 | Redis image | `redis:8.10.2-alpine` (digest `sha256:0bf6577d…`), up from 7.4.7 on 2026-10-26 | BullMQ requires ≥5.0.0 and recommends ≥6.2.0. Pinned tag; the digest is recorded in every manifest. The Redis 8 server is licensed RSALv2/SSPLv1/AGPLv3; killpoint only runs the official image as a disposable local test service and does not distribute it. |
