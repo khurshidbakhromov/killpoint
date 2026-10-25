@@ -50,6 +50,16 @@ The results above were recorded under the provisional name "crash-retry-lab" (th
 
 A15 (30 runs) was **not** repeated after the rename; its record is from the pre-rename code, which differed only in names.
 
+## GitHub Actions CI (2026-10-25)
+
+Run [40214085573](https://github.com/khurshidbakhromov/killpoint/actions/runs/40214085573) on `ubuntu-24.04` (native Linux, Docker Engine 28.0.4, Compose 2.38.2), commit `c7be636`, took 1m52s:
+- unit tests 45/45;
+- integration tests 14/14, none skipped;
+- `demo --compare` observed every expected outcome;
+- packed-consumer test exited 0.
+
+The only warning was the deprecated Node 20 runtime in `actions/*@v4`. The actions were then updated to v7.
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |
@@ -73,8 +83,7 @@ A15 (30 runs) was **not** repeated after the rename; its record is from the pre-
 
 ## Not verified
 
-- **The GitHub Actions workflow (`.github/workflows/ci.yml`) has never run.** The repository has no remote and nothing has been pushed. Linux CI on `ubuntu-24.04` is therefore unverified.
-- Native (non-WSL) Linux, macOS, other Node majors, other BullMQ/Redis/PostgreSQL versions.
+- macOS, other Node majors, other BullMQ/Redis/PostgreSQL versions.
 - BullMQ default (30 s) lock timings: only the short test timings were exercised.
 - The optional split-transaction regression fixture was not built.
 - All recorded runs predate the initial commit, so their `manifest.source.gitCommit` is `null`; new runs record the commit and dirty flag.
@@ -83,5 +92,4 @@ A15 (30 runs) was **not** repeated after the rename; its record is from the pre-
 ## Open items and blockers
 
 1. A16: integrate with one authorized real BullMQ application and measure setup time and lines changed against Faultline.
-2. Push to a remote and confirm the CI workflow goes green.
-3. Decide whether to keep TypeScript 6.0.3 or move to 7.x.
+2. Decide whether to keep TypeScript 6.0.3 or move to 7.x.

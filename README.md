@@ -72,4 +72,4 @@ This project's hypothesis, which is not yet proven, is that a small TypeScript l
 
 ## Status
 
-Experimental and unpublished. Validated only against the reference ledger fixture on Linux (WSL2). Real-application validation (A16) is pending. MIT licensed.
+Experimental and unpublished. Validated only against the reference ledger fixture, on WSL2 and on GitHub Actions Linux CI. Real-application validation (A16) is pending. MIT licensed.
