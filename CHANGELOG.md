@@ -5,6 +5,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 ## [Unreleased]
 
 ### Added
+- A15 repeatability record on the current stack: 30/30 (`docs/evidence/repeatability-2026-10-26.json`).
 - Repository community files: contributing guide, Code of Conduct (Contributor Covenant 2.1), security policy, support guide, issue and PR templates, CODEOWNERS and Dependabot configuration.
 
 ### Changed
