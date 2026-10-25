@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "killpoint",
+    "version": "0.1.0-experimental.0"
+  },
+  "final": true,
+  "runId": "20261025t222719-c56f01",
+  "scenario": "baseline",
+  "processor": "optio",
+  "adapterId": "optio-schedule-trigger",
+  "startedAt": "2026-10-25T22:27:19.997Z",
+  "finishedAt": "2026-10-25T22:27:30.987Z",
+  "durationMs": 10990,
+  "outcome": "PASS",
+  "evaluatedOutcome": "PASS",
+  "validity": {
+    "valid": true,
+    "evidence": [
+      {
+        "id": "worker-a-ready",
+        "satisfied": true,
+        "detail": "worker A pid 631420 READY, unarmed"
+      },
+      {
+        "id": "job-submitted-once",
+        "satisfied": true,
+        "detail": "job job-20261025t222719-c56f01 for operation schedule:3f6b5996-c236-43a5-90e7-ade82978b4ed:2026-10-25T22:26:00.000Z"
+      },
+      {
+        "id": "job-terminal",
+        "satisfied": true,
+        "detail": "terminal queue event observed"
+      },
+      {
+        "id": "final-observation",
+        "satisfied": true,
+        "detail": "final durable state read on an independent connection"
+      },
+      {
+        "id": "single-job-in-queue",
+        "satisfied": true,
+        "detail": "queue job ids: [job-20261025t222719-c56f01]; processing of other jobs: 0"
+      },
+      {
+        "id": "single-processing-attempt",
+        "satisfied": true,
+        "detail": "1 processing start(s)"
+      },
+      {
+        "id": "no-stall-recovery",
+        "satisfied": true,
+        "detail": "0 stalled event(s)"
+      }
+    ],
+    "missing": []
+  },
+  "reasons": [],
+  "fault": null,
+  "operationId": "schedule:3f6b5996-c236-43a5-90e7-ade82978b4ed:2026-10-25T22:26:00.000Z",
+  "payloadSha256": "5273f92dd1f886b5c09eb020db204ddd43284ac0d717ebfac924cbe61e805125",
+  "observations": {
+    "initial": {
+      "trigger": {
+        "nextFireAt": "2026-10-25T22:26:00.000Z"
+      },
+      "control": {
+        "nextFireAt": "2026-10-26T22:27:24.219Z",
+        "updatedAt": "2026-10-25T22:27:24.219Z"
+      },
+      "occurrencesForKey": 0,
+      "occurrencesTotal": 0,
+      "occurrenceStates": []
+    },
+    "atCheckpoint": null,
+    "final": {
+      "trigger": {
+        "nextFireAt": "2026-10-25T22:30:00.000Z"
+      },
+      "control": {
+        "nextFireAt": "2026-10-26T22:27:24.219Z",
+        "updatedAt": "2026-10-25T22:27:24.219Z"
+      },
+      "occurrencesForKey": 1,
+      "occurrencesTotal": 1,
+      "occurrenceStates": [
+        "skipped"
+      ]
+    }
+  },
+  "invariants": [
+    {
+      "id": "job-completed-within-deadline",
+      "description": "Job completed within deadline",
+      "category": "kit",
+      "expected": "completed",
+      "observed": "completed",
+      "verdict": "pass"
+    },
+    {
+      "id": "at-most-one-occurrence",
+      "description": "Occurrences for this schedule tick (at most one)",
+      "category": "business",
+      "expected": "<= 1",
+      "observed": 1,
+      "verdict": "pass"
+    },
+    {
+      "id": "at-least-one-occurrence",
+      "description": "Occurrences for this schedule tick (at least one, not lost)",
+      "category": "business",
+      "expected": ">= 1",
+      "observed": 1,
+      "verdict": "pass"
+    },
+    {
+      "id": "schedule-advanced",
+      "description": "Schedule moved past the fired tick",
+      "category": "business",
+      "expected": "> 2026-10-25T22:26:00.000Z",
+      "observed": "2026-10-25T22:30:00.000Z",
+      "verdict": "pass"
+    },
+    {
+      "id": "no-other-occurrences",
+      "description": "No occurrences for other triggers or ticks",
+      "category": "business",
+      "expected": 1,
+      "observed": 1,
+      "verdict": "pass"
+    },
+    {
+      "id": "control-trigger-unchanged",
+      "description": "Unrelated schedule trigger unchanged",
+      "category": "business",
+      "expected": {
+        "nextFireAt": "2026-10-26T22:27:24.219Z",
+        "updatedAt": "2026-10-25T22:27:24.219Z"
+      },
+      "observed": {
+        "nextFireAt": "2026-10-26T22:27:24.219Z",
+        "updatedAt": "2026-10-25T22:27:24.219Z"
+      },
+      "verdict": "pass"
+    }
+  ],
+  "job": {
+    "jobId": "job-20261025t222719-c56f01",
+    "state": "completed",
+    "attemptsStarted": 1,
+    "attemptsMade": 1,
+    "stalledCounter": 0,
+    "finishedOn": 1792967245099,
+    "failedReason": null
+  },
+  "processingStarts": [
+    {
+      "generation": "A",
+      "jobId": "job-20261025t222719-c56f01",
+      "operationId": "schedule:3f6b5996-c236-43a5-90e7-ade82978b4ed:2026-10-25T22:26:00.000Z",
+      "attemptsStarted": 1
+    }
+  ],
+  "livenessTimeout": false,
+  "halt": null,
+  "states": [
+    "CREATED",
+    "PREFLIGHT_OK",
+    "INFRA_READY",
+    "A_READY",
+    "JOB_SUBMITTED",
+    "JOB_TERMINAL",
+    "OBSERVED",
+    "REPORTED",
+    "CLEANED"
+  ],
+  "timing": {
+    "lockDurationMs": 3000,
+    "stalledIntervalMs": 1000,
+    "maxStalledCount": 1,
+    "label": "test-only short lock timings; not production guidance"
+  },
+  "deadlines": {
+    "infraStartMs": 120000,
+    "workerReadyMs": 20000,
+    "checkpointMs": 20000,
+    "killConfirmMs": 5000,
+    "recoveryMs": 15000,
+    "completionMs": 20000,
+    "stopMs": 5000,
+    "cleanupMs": 60000
+  },
+  "diagnostics": [],
+  "cleanup": {
+    "status": "ok",
+    "steps": [
+      {
+        "name": "stop-worker-A",
+        "ok": true,
+        "detail": "force-killed after stop deadline"
+      },
+      {
+        "name": "close-queue-observers",
+        "ok": true,
+        "detail": "closed"
+      },
+      {
+        "name": "adapter-teardown",
+        "ok": true,
+        "detail": "adapter resources removed"
+      },
+      {
+        "name": "verify-ownership",
+        "ok": true,
+        "detail": "2 owned container(s) in kp-20261025t222719-c56f01"
+      },
+      {
+        "name": "compose-down",
+        "ok": true,
+        "detail": "removed project kp-20261025t222719-c56f01"
+      },
+      {
+        "name": "verify-removed",
+        "ok": true,
+        "detail": "no owned containers or networks remain"
+      },
+      {
+        "name": "verify-no-owned-workers",
+        "ok": true,
+        "detail": "no owned worker processes remain"
+      }
+    ]
+  },
+  "artifacts": {
+    "dir": "/tmp/claude-1000/-home-kb-projects-crash-test/a23686c9-f2ae-4580-8a5a-eb81a7e01228/scratchpad/a16-optio/.killpoint/a16-repeat/20261025t222719-c56f01",
+    "manifest": "/tmp/claude-1000/-home-kb-projects-crash-test/a23686c9-f2ae-4580-8a5a-eb81a7e01228/scratchpad/a16-optio/.killpoint/a16-repeat/20261025t222719-c56f01/manifest.json",
+    "events": "/tmp/claude-1000/-home-kb-projects-crash-test/a23686c9-f2ae-4580-8a5a-eb81a7e01228/scratchpad/a16-optio/.killpoint/a16-repeat/20261025t222719-c56f01/events.jsonl",
+    "report": "/tmp/claude-1000/-home-kb-projects-crash-test/a23686c9-f2ae-4580-8a5a-eb81a7e01228/scratchpad/a16-optio/.killpoint/a16-repeat/20261025t222719-c56f01/report.json"
+  },
+  "rerun": {
+    "command": "killpoint rerun --manifest /tmp/claude-1000/-home-kb-projects-crash-test/a23686c9-f2ae-4580-8a5a-eb81a7e01228/scratchpad/a16-optio/.killpoint/a16-repeat/20261025t222719-c56f01/manifest.json",
+    "of": null,
+    "inputsChanged": false
+  }
+}

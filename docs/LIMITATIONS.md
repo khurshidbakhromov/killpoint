@@ -12,4 +12,4 @@
 - **Trusted code only.** Config, adapter and processor modules execute with your privileges. Configuration is not a sandbox.
 - **No process-tree cleanup.** Processor fixtures must not spawn unmanaged grandchildren.
 - **Runner SIGKILL.** If the runner itself is killed, owned workers exit when their IPC channel closes, but containers remain until you run `killpoint cleanup --manifest <run>/manifest.json`.
-- **Not validated on a real application (A16 pending).** There is no evidence yet that existing teams can adopt this more easily than the alternatives.
+- **Real-world validation is partial (A16).** killpoint has been run against one open-source application (Optio; see `validation/A16-optio.md`), but only by its author. There is no evidence yet that teams adopt it, or that it is easier to adopt than the alternatives.

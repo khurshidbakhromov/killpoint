@@ -1,0 +1,6 @@
+{
+  "name": "killpoint-a16-optio-harness",
+  "private": true,
+  "type": "module",
+  "description": "A16 validation harness: killpoint against Optio's schedule-trigger sweep. Not part of the published package."
+}
