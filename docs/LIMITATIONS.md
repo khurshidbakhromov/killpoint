@@ -2,7 +2,7 @@
 
 - **One failure class.** v0.1 covers only a worker SIGKILL after a committed effect and before acknowledgement, followed by BullMQ stalled redelivery. It does not cover a lost reply from a remote effect (v0.2), stale-owner resumption or fencing (v0.3), network partitions, or Redis or PostgreSQL crashes.
 - **Only the worker process crashes.** PostgreSQL runs on tmpfs and is never restarted. "Durable" means committed and visible to an independent connection, not fsync-survives-power-loss.
-- **One stack.** BullMQ 6.4.2 with ioredis 5, PostgreSQL 17.7 and Redis 7.4.7, on Node 24, Linux, Docker Engine and Compose v2+ (tested 5.5.1). Other versions are untested; the manifest records what actually ran.
+- **One stack.** BullMQ 6.4.2 with ioredis 6.0.0, PostgreSQL 18.6 and Redis 8.10.2, on Node 24, Linux, Docker Engine and Compose v2+ (tested 5.5.1). Other versions are untested; the manifest records what actually ran.
 - **Platforms.** Verified on WSL2 (Ubuntu, Docker Desktop 29.8.1) locally and on GitHub Actions `ubuntu-24.04` (Docker 28.0.4, Compose 2.38.2). macOS and native Windows fail preflight.
 - **One job, one concurrency, two worker generations.** A run uses exactly one logical job, worker concurrency 1, worker A (faulted) and worker B (recovery). Extra recoveries are recorded, not prevented.
 - **Short, test-only lock timings.** The defaults are lock 3000 ms and stalled interval 1000 ms so recovery takes seconds. These are labelled in every manifest and are **not** production guidance.

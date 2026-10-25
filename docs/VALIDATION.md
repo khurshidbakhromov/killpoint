@@ -9,7 +9,7 @@ Date: 2026-10-25. Everything below was actually executed. Anything not executed 
 | OS | Linux 6.18.54.1-microsoft-standard-WSL2 (WSL2, x64) |
 | Node / npm | 24.21.0 / 11.19.0 |
 | Docker Engine / Compose | 29.8.1 / 5.5.1 (Docker Desktop WSL integration) |
-| BullMQ / ioredis / pg / ajv / TypeScript | 6.4.2 / 5.11.1 / 8.23.1 / 8.20.0 / 6.0.3 |
+| BullMQ / ioredis / pg / ajv / TypeScript | 6.4.2 / 5.11.1 / 8.23.1 / 8.20.0 / 6.0.3 (on 2026-10-26: ioredis 6.0.0 and TypeScript 7.0.2; see below) |
 | Redis image | `redis:7.4.7-alpine` `sha256:02f2cc4882f8bf87c79a220ac958f58c700bdec0dfb9b9ea61b62fb0e8f1bfcf`, server 7.4.7 |
 | PostgreSQL image | `postgres:17.7-alpine` `sha256:bb377b7239d2774ac8cc76f481596ce96c5a6b5e9d141f6d0a0ee371a6e7c0f2`, server 17.7 |
 | Timing | lock 3000 ms, stalled interval 1000 ms, maxStalledCount 1 (test-only) |
@@ -60,6 +60,25 @@ Run [40214085573](https://github.com/khurshidbakhromov/killpoint/actions/runs/40
 
 The only warning was the deprecated Node 20 runtime in `actions/*@v4`. The actions were then updated to v7.
 
+## Image upgrade: Redis 8.10.2 and PostgreSQL 18.6 (2026-10-26)
+
+The environment table and the A15 record above are from Redis 7.4.7 and PostgreSQL 17.7. After moving to `redis:8.10.2-alpine` (`sha256:0bf6577d7774e592b29d093e3ac9390eb91e13d72c21e506afce736de5e0eeb0`) and `postgres:18.6-alpine` (`sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5`), the following were run locally on WSL2:
+- `npm test`: 45/45 unit and 14/14 integration pass;
+- `demo --compare`: PASS / VIOLATION / PASS, with the manifest recording `redisServer 8.10.2` and `postgresServer 18.6`.
+
+A15 was not repeated on the new images.
+
+## TypeScript 7.0.2 and ioredis 6.0.0 (2026-10-26)
+
+ioredis 6.0.0 was merged from Dependabot #4 after its CI passed: unit and integration tests plus the demo, against real Redis with BullMQ redelivery.
+
+On the combined stack (`typescript` 7.0.2, `@types/node` 24.19.2, ioredis 6.0.0, Redis 8.10.2, PostgreSQL 18.6), locally on WSL2:
+- `npm run typecheck`: clean;
+- `npm test`: 45/45 unit and 14/14 integration pass;
+- `npm run test:consumer`: PASS, exit 0.
+
+Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (TS2722: `process.disconnect` became optional), so `@types/node` majors are now held to 24.x, and the call was made defensive (`process.disconnect?.()`).
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |
@@ -92,4 +111,3 @@ The only warning was the deprecated Node 20 runtime in `actions/*@v4`. The actio
 ## Open items and blockers
 
 1. A16: integrate with one authorized real BullMQ application and measure setup time and lines changed against Faultline.
-2. Decide whether to keep TypeScript 6.0.3 or move to 7.x.
