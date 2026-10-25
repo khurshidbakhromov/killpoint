@@ -10,4 +10,5 @@ export const fixtureAdapter = createLedgerAdapter({
   noop: fixture('noop'),
   'forged-ipc': fixture('forged-ipc'),
   leaky: fixture('leaky'),
+  'execargv-check': fixture('execargv-check'),
 });

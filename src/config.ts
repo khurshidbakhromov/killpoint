@@ -32,6 +32,11 @@ export interface LabConfig {
   /** Keep unredacted worker stdout/stderr in local-only raw-*.log files. Off by default. */
   captureRawOutput?: boolean;
   dockerCommand?: string;
+  /**
+   * Extra Node.js flags for worker processes, e.g. `['--import', 'tsx']` for applications whose
+   * workspace packages export TypeScript source. Trusted local configuration; recorded in the manifest.
+   */
+  workerExecArgv?: string[];
 }
 
 export interface ResolvedConfig {
@@ -41,6 +46,7 @@ export interface ResolvedConfig {
   deadlines: Deadlines;
   captureRawOutput: boolean;
   dockerCommand: string;
+  workerExecArgv: string[];
   source: { path: string | null; sha256: string | null };
 }
 
@@ -82,6 +88,7 @@ const configSchema = {
     deadlines: { type: 'object', additionalProperties: false, properties: deadlineProps },
     captureRawOutput: { type: 'boolean' },
     dockerCommand: { type: 'string', minLength: 1 },
+    workerExecArgv: { type: 'array', maxItems: 32, items: { type: 'string', minLength: 1, maxLength: 4096 } },
   },
 } as const;
 
@@ -153,6 +160,7 @@ export function resolveConfig(input: LabConfig, source: ResolvedConfig['source']
     deadlines,
     captureRawOutput: input.captureRawOutput ?? false,
     dockerCommand: input.dockerCommand ?? 'docker',
+    workerExecArgv: input.workerExecArgv ?? [],
     source,
   };
 }

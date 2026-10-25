@@ -71,3 +71,16 @@ test('A13: secrets never reach default artifacts; unrelated Docker resources sur
     execFileSync('docker', ['network', 'rm', unrelated], { stdio: 'ignore' });
   }
 });
+
+test('workerExecArgv reaches both worker generations and is recorded in the manifest', async (t) => {
+  if (!requireDocker(t)) return;
+  const { REQUIRED_FLAG } = await import('../fixtures/processors/execargv-check.js');
+  const r = await runScenario({ config: config({ workerExecArgv: [REQUIRED_FLAG] }), scenario: 'post-commit-crash', processor: 'execargv-check' });
+  assert.equal(r.outcome, 'PASS', r.report.reasons.join('; '));
+  assert.deepEqual(r.report.processingStarts.map((s) => s.generation), ['A', 'B']);
+  const manifest = JSON.parse(readFileSync(r.report.artifacts.manifest, 'utf8'));
+  assert.deepEqual(manifest.workerExecArgv, [REQUIRED_FLAG]);
+  // Without the flag the fixture refuses to start, so the run cannot pass.
+  const without = await runScenario({ config: config(), scenario: 'baseline', processor: 'execargv-check' });
+  assert.equal(without.outcome, 'ERROR');
+});
