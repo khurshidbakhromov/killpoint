@@ -1,0 +1,38 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # Initial supported CI environment for v0.1: Linux x64, Node 24, Docker Engine + Compose v2+.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - name: Pre-pull pinned service images
+        run: docker compose -f compose.yaml pull
+        env:
+          CRL_RUN_ID: ci-pull
+          CRL_PG_PASSWORD: ci-pull
+      - run: node dist/src/cli.js doctor
+      - name: Integration (real Redis, PostgreSQL, SIGKILL, broker redelivery)
+        run: node --test --test-concurrency=2 --test-timeout=300000 "dist/tests/integration/**/*.test.js"
+      - name: Demo comparison
+        run: node dist/src/cli.js demo --compare --quiet
+      - name: Packed consumer smoke test (A14)
+        run: npm run test:consumer
+      - name: Upload run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crash-retry-lab-runs
+          path: .crash-retry-lab/
+          if-no-files-found: ignore

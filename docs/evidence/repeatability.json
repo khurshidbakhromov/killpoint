@@ -1,0 +1,328 @@
+{
+  "experiment": "A15 repeatability",
+  "startedAt": "2026-10-25T15:09:16.024Z",
+  "finishedAt": "2026-10-25T15:12:18.030Z",
+  "node": "24.21.0",
+  "platform": "linux x64",
+  "cyclesRequested": 10,
+  "casesRun": 30,
+  "matchingExpectation": 30,
+  "outcomeCounts": {
+    "baseline / unsafe -> PASS": 10,
+    "post-commit-crash / unsafe -> VIOLATION": 10,
+    "post-commit-crash / idempotent -> PASS": 10
+  },
+  "durationMs": {
+    "min": 3441,
+    "median": 6664,
+    "max": 8571
+  },
+  "timing": {
+    "lockDurationMs": 3000,
+    "stalledIntervalMs": 1000,
+    "maxStalledCount": 1,
+    "label": "test-only short lock timings; not production guidance"
+  },
+  "rows": [
+    {
+      "cycle": 1,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3498,
+      "runId": "20261025t150916-0821b3",
+      "reasons": []
+    },
+    {
+      "cycle": 1,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7800,
+      "runId": "20261025t150919-1ef41d",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 1,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 7059,
+      "runId": "20261025t150927-ce82df",
+      "reasons": []
+    },
+    {
+      "cycle": 2,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 4462,
+      "runId": "20261025t150934-47f7b9",
+      "reasons": []
+    },
+    {
+      "cycle": 2,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7627,
+      "runId": "20261025t150938-ed59f8",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 2,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 7652,
+      "runId": "20261025t150946-eb7256",
+      "reasons": []
+    },
+    {
+      "cycle": 3,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3542,
+      "runId": "20261025t150954-789791",
+      "reasons": []
+    },
+    {
+      "cycle": 3,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7598,
+      "runId": "20261025t150957-341747",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 3,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 6550,
+      "runId": "20261025t151005-a24a2d",
+      "reasons": []
+    },
+    {
+      "cycle": 4,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3441,
+      "runId": "20261025t151011-538180",
+      "reasons": []
+    },
+    {
+      "cycle": 4,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7625,
+      "runId": "20261025t151015-f7d000",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 4,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 6614,
+      "runId": "20261025t151022-cab80c",
+      "reasons": []
+    },
+    {
+      "cycle": 5,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3456,
+      "runId": "20261025t151029-457b47",
+      "reasons": []
+    },
+    {
+      "cycle": 5,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 8571,
+      "runId": "20261025t151033-2cbbcd",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 5,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 6678,
+      "runId": "20261025t151041-e37d4a",
+      "reasons": []
+    },
+    {
+      "cycle": 6,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3530,
+      "runId": "20261025t151048-d3813c",
+      "reasons": []
+    },
+    {
+      "cycle": 6,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 6661,
+      "runId": "20261025t151051-3eab24",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 6,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 6594,
+      "runId": "20261025t151058-5f9203",
+      "reasons": []
+    },
+    {
+      "cycle": 7,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3504,
+      "runId": "20261025t151105-c5f780",
+      "reasons": []
+    },
+    {
+      "cycle": 7,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7580,
+      "runId": "20261025t151108-ba03bc",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 7,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 6595,
+      "runId": "20261025t151116-2e37d0",
+      "reasons": []
+    },
+    {
+      "cycle": 8,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3446,
+      "runId": "20261025t151122-3a456e",
+      "reasons": []
+    },
+    {
+      "cycle": 8,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 6664,
+      "runId": "20261025t151126-308b74",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 8,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 7602,
+      "runId": "20261025t151132-3c6bfd",
+      "reasons": []
+    },
+    {
+      "cycle": 9,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 4399,
+      "runId": "20261025t151140-7b656a",
+      "reasons": []
+    },
+    {
+      "cycle": 9,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 7675,
+      "runId": "20261025t151144-1b6882",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 9,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 7567,
+      "runId": "20261025t151152-df3311",
+      "reasons": []
+    },
+    {
+      "cycle": 10,
+      "case": "baseline / unsafe",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 3563,
+      "runId": "20261025t151200-ce7211",
+      "reasons": []
+    },
+    {
+      "cycle": 10,
+      "case": "post-commit-crash / unsafe",
+      "expected": "VIOLATION",
+      "observed": "VIOLATION",
+      "durationMs": 6750,
+      "runId": "20261025t151203-f8c1d0",
+      "reasons": [
+        "invariant failed: at-most-one-effect",
+        "invariant failed: exact-account-delta"
+      ]
+    },
+    {
+      "cycle": 10,
+      "case": "post-commit-crash / idempotent",
+      "expected": "PASS",
+      "observed": "PASS",
+      "durationMs": 7581,
+      "runId": "20261025t151210-bacf2e",
+      "reasons": []
+    }
+  ]
+}

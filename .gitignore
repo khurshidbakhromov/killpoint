@@ -1,0 +1,11 @@
+.crash-retry-lab/
+node_modules/
+dist/
+*.tgz
+
+# Local agent-tooling state (created by editor plugins, not part of the project)
+.claude-flow/
+.swarm/
+agentdb.rvf
+agentdb.rvf.idmap.json
+ruvector.db

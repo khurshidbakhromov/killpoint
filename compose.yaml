@@ -1,0 +1,36 @@
+# Disposable per-run test services for crash-retry-lab.
+# The runner always invokes this with a unique project name (-p crl-<run-id>) and
+# CRL_RUN_ID / CRL_PG_PASSWORD set. Ports bind to loopback with host-allocated
+# numbers; the runner discovers them with `docker compose port`.
+services:
+  redis:
+    image: redis:7.4.7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports: ["127.0.0.1::6379"]
+    labels:
+      io.crash-retry-lab.owner: crash-retry-lab
+      io.crash-retry-lab.run-id: "${CRL_RUN_ID:?CRL_RUN_ID is required}"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 2s
+      retries: 60
+  postgres:
+    image: postgres:17.7-alpine
+    environment:
+      POSTGRES_USER: crl
+      POSTGRES_DB: crl
+      POSTGRES_PASSWORD: "${CRL_PG_PASSWORD:?CRL_PG_PASSWORD is required}"
+    ports: ["127.0.0.1::5432"]
+    # Data lives in the container's tmpfs: only worker processes are crashed in v0.1,
+    # never PostgreSQL itself, so committed-and-visible is the durability boundary tested.
+    tmpfs:
+      - /var/lib/postgresql/data
+    labels:
+      io.crash-retry-lab.owner: crash-retry-lab
+      io.crash-retry-lab.run-id: "${CRL_RUN_ID:?CRL_RUN_ID is required}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crl -d crl -h 127.0.0.1"]
+      interval: 1s
+      timeout: 2s
+      retries: 60

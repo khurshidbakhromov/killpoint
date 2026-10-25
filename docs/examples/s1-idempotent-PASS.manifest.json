@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "runId": "20261025t150927-ce82df",
+  "scenario": "post-commit-crash",
+  "processor": "idempotent",
+  "adapterId": "ledger-reference",
+  "createdAt": "2026-10-25T15:09:27.334Z",
+  "tool": {
+    "name": "crash-retry-lab",
+    "version": "0.1.0-experimental.0"
+  },
+  "source": {
+    "cwd": "/home/kb/projects/crash-test",
+    "gitCommit": null,
+    "gitDirty": null
+  },
+  "fingerprints": {
+    "configPath": null,
+    "config": null,
+    "processorModule": "ab81c0ad761b1ecd4aacea6d9ce4148f1eabca8d48be6e9cbb7f0e7e58b158c4",
+    "composeFile": "844d379633f395372a764b8e024e4a3239e94aa1424491e060b4bfa30a699892",
+    "lockfile": "a3247962a47a32fe87ca796197be35556454562ed5c7c6fc87ad9e7900422ec8"
+  },
+  "versions": {
+    "node": "24.21.0",
+    "bullmq": "6.4.2",
+    "pg": "8.23.1",
+    "redisServer": "7.4.7",
+    "postgresServer": "17.7"
+  },
+  "images": [
+    {
+      "service": "postgres",
+      "containerId": "9a6a9d6899a7",
+      "imageRef": "postgres:17.7-alpine",
+      "imageId": "sha256:bb377b7239d2774ac8cc76f481596ce96c5a6b5e9d141f6d0a0ee371a6e7c0f2",
+      "repoDigests": [
+        "postgres@sha256:bb377b7239d2774ac8cc76f481596ce96c5a6b5e9d141f6d0a0ee371a6e7c0f2"
+      ]
+    },
+    {
+      "service": "redis",
+      "containerId": "a1806d8f6848",
+      "imageRef": "redis:7.4.7-alpine",
+      "imageId": "sha256:02f2cc4882f8bf87c79a220ac958f58c700bdec0dfb9b9ea61b62fb0e8f1bfcf",
+      "repoDigests": [
+        "redis@sha256:02f2cc4882f8bf87c79a220ac958f58c700bdec0dfb9b9ea61b62fb0e8f1bfcf"
+      ]
+    }
+  ],
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "wsl": true,
+    "node": "24.21.0",
+    "docker": "29.8.1",
+    "compose": "5.5.1"
+  },
+  "timing": {
+    "lockDurationMs": 3000,
+    "stalledIntervalMs": 1000,
+    "maxStalledCount": 1,
+    "label": "test-only short lock timings; not production guidance"
+  },
+  "deadlines": {
+    "infraStartMs": 120000,
+    "workerReadyMs": 20000,
+    "checkpointMs": 20000,
+    "killConfirmMs": 5000,
+    "recoveryMs": 15000,
+    "completionMs": 20000,
+    "stopMs": 5000,
+    "cleanupMs": 60000
+  },
+  "ownedResources": {
+    "composeProject": "crl-20261025t150927-ce82df",
+    "queuePrefix": "crl",
+    "queueName": "q-20261025t150927-ce82df",
+    "namespace": "crl_20261025t150927_ce82df",
+    "jobId": "job-20261025t150927-ce82df",
+    "workers": [
+      {
+        "generation": "A",
+        "pid": 438903
+      },
+      {
+        "generation": "B",
+        "pid": 438915
+      }
+    ]
+  },
+  "cleanup": {
+    "command": "crash-retry-lab cleanup --manifest /home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df/manifest.json",
+    "manual": "CRL_RUN_ID=20261025t150927-ce82df CRL_PG_PASSWORD=x docker compose -p crl-20261025t150927-ce82df -f <crash-retry-lab>/compose.yaml down --volumes --remove-orphans"
+  },
+  "rerunOf": null,
+  "inputsChanged": false
+}

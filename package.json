@@ -1,0 +1,64 @@
+{
+  "name": "crash-retry-lab",
+  "version": "0.1.0-experimental.0",
+  "description": "Kill a BullMQ worker right after it commits a PostgreSQL effect, let the broker redeliver, and check the durable outcome.",
+  "license": "MIT",
+  "author": "Khurshid",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "os": [
+    "linux"
+  ],
+  "bin": {
+    "crash-retry-lab": "dist/src/cli.js"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./processor": {
+      "types": "./dist/src/processor.d.ts",
+      "default": "./dist/src/processor.js"
+    },
+    "./examples/ledger": {
+      "types": "./dist/examples/ledger/adapter.d.ts",
+      "default": "./dist/examples/ledger/adapter.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/src",
+    "dist/examples",
+    "compose.yaml",
+    "README.md",
+    "LICENSE",
+    "docs"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && chmod +x dist/src/cli.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:unit": "npm run build && node --test \"dist/tests/unit/**/*.test.js\"",
+    "test:integration": "npm run build && node --test --test-concurrency=2 --test-timeout=300000 \"dist/tests/integration/**/*.test.js\"",
+    "test:consumer": "bash tests/consumer/smoke.sh",
+    "test": "npm run test:unit && node --test --test-concurrency=2 --test-timeout=300000 \"dist/tests/integration/**/*.test.js\"",
+    "demo": "npm run build && node dist/src/cli.js demo --compare",
+    "repeatability": "npm run build && node dist/scripts/repeatability.js"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "bullmq": "6.4.2",
+    "ioredis": "5.11.1",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "tool": {
+    "name": "crash-retry-lab",
+    "version": "0.1.0-experimental.0"
+  },
+  "final": true,
+  "runId": "20261025t150927-ce82df",
+  "scenario": "post-commit-crash",
+  "processor": "idempotent",
+  "adapterId": "ledger-reference",
+  "startedAt": "2026-10-25T15:09:27.334Z",
+  "finishedAt": "2026-10-25T15:09:34.393Z",
+  "durationMs": 7059,
+  "outcome": "PASS",
+  "evaluatedOutcome": "PASS",
+  "validity": {
+    "valid": true,
+    "evidence": [
+      {
+        "id": "worker-a-ready",
+        "satisfied": true,
+        "detail": "worker A pid 438903 READY, armed at \"effect-committed\""
+      },
+      {
+        "id": "job-submitted-once",
+        "satisfied": true,
+        "detail": "job job-20261025t150927-ce82df for operation credit-0001"
+      },
+      {
+        "id": "checkpoint-reached",
+        "satisfied": true,
+        "detail": "CHECKPOINT_REACHED seq 16 from worker A for job-20261025t150927-ce82df"
+      },
+      {
+        "id": "commit-independently-confirmed",
+        "satisfied": true,
+        "detail": "independent read at checkpoint: 1 accepted effect(s), balance 100"
+      },
+      {
+        "id": "fault-delivered",
+        "satisfied": true,
+        "detail": "SIGKILL delivered to owned worker A pid 438903"
+      },
+      {
+        "id": "worker-a-exit-confirmed",
+        "satisfied": true,
+        "detail": "worker A exit code null signal SIGKILL"
+      },
+      {
+        "id": "job-active-after-kill",
+        "satisfied": true,
+        "detail": "job state after worker A death: active"
+      },
+      {
+        "id": "broker-stalled-recovery",
+        "satisfied": true,
+        "detail": "queue stalled event seq 27"
+      },
+      {
+        "id": "redelivered-to-worker-b",
+        "satisfied": true,
+        "detail": "worker B started job-20261025t150927-ce82df with operation credit-0001"
+      },
+      {
+        "id": "job-terminal",
+        "satisfied": true,
+        "detail": "terminal queue event observed"
+      },
+      {
+        "id": "final-observation",
+        "satisfied": true,
+        "detail": "final durable state read on an independent connection"
+      },
+      {
+        "id": "single-job-in-queue",
+        "satisfied": true,
+        "detail": "queue job ids: [job-20261025t150927-ce82df]; processing of other jobs: 0"
+      }
+    ],
+    "missing": []
+  },
+  "reasons": [],
+  "fault": {
+    "requested": {
+      "kind": "SIGKILL",
+      "target": "worker A",
+      "checkpoint": "effect-committed"
+    },
+    "delivered": true,
+    "confirmed": true,
+    "exit": {
+      "code": null,
+      "signal": "SIGKILL"
+    }
+  },
+  "operationId": "credit-0001",
+  "payloadSha256": "a30bacd750fcf6c69ac669792822442faa0e10adf56fc1ff8aeb4de832b6987a",
+  "observations": {
+    "initial": {
+      "target": {
+        "tenantId": "tenant-a",
+        "operationId": "credit-0001",
+        "operationEffects": 0,
+        "balance": 0,
+        "acceptedEffects": 0,
+        "effectTotal": 0,
+        "operationReceipts": 0
+      },
+      "control": {
+        "tenantId": "tenant-control",
+        "balance": 500,
+        "acceptedEffects": 1,
+        "effectTotal": 500,
+        "operationReceipts": 1
+      },
+      "attempts": []
+    },
+    "atCheckpoint": {
+      "target": {
+        "tenantId": "tenant-a",
+        "operationId": "credit-0001",
+        "operationEffects": 1,
+        "balance": 100,
+        "acceptedEffects": 1,
+        "effectTotal": 100,
+        "operationReceipts": 1
+      },
+      "control": {
+        "tenantId": "tenant-control",
+        "balance": 500,
+        "acceptedEffects": 1,
+        "effectTotal": 500,
+        "operationReceipts": 1
+      },
+      "attempts": [
+        {
+          "generation": "A",
+          "status": "started"
+        }
+      ]
+    },
+    "final": {
+      "target": {
+        "tenantId": "tenant-a",
+        "operationId": "credit-0001",
+        "operationEffects": 1,
+        "balance": 100,
+        "acceptedEffects": 1,
+        "effectTotal": 100,
+        "operationReceipts": 1
+      },
+      "control": {
+        "tenantId": "tenant-control",
+        "balance": 500,
+        "acceptedEffects": 1,
+        "effectTotal": 500,
+        "operationReceipts": 1
+      },
+      "attempts": [
+        {
+          "generation": "A",
+          "status": "started"
+        },
+        {
+          "generation": "B",
+          "status": "finished-deduplicated"
+        }
+      ]
+    }
+  },
+  "invariants": [
+    {
+      "id": "job-completed-within-deadline",
+      "description": "Job completed within deadline",
+      "category": "kit",
+      "expected": "completed",
+      "observed": "completed",
+      "verdict": "pass"
+    },
+    {
+      "id": "at-most-one-effect",
+      "description": "Accepted effects (at most one)",
+      "category": "business",
+      "expected": "<= 1",
+      "observed": 1,
+      "verdict": "pass"
+    },
+    {
+      "id": "at-least-one-effect",
+      "description": "Accepted effects (at least one)",
+      "category": "business",
+      "expected": ">= 1",
+      "observed": 1,
+      "verdict": "pass"
+    },
+    {
+      "id": "exact-account-delta",
+      "description": "Account delta",
+      "category": "business",
+      "expected": 100,
+      "observed": 100,
+      "verdict": "pass"
+    },
+    {
+      "id": "no-unrelated-changes",
+      "description": "Unrelated tenant/operation state unchanged",
+      "category": "business",
+      "expected": {
+        "control": {
+          "balance": 500,
+          "effects": 1,
+          "receipts": 1
+        },
+        "otherTargetEffects": 0
+      },
+      "observed": {
+        "control": {
+          "balance": 500,
+          "effects": 1,
+          "receipts": 1
+        },
+        "otherTargetEffects": 0
+      },
+      "verdict": "pass"
+    }
+  ],
+  "job": {
+    "jobId": "job-20261025t150927-ce82df",
+    "state": "completed",
+    "attemptsStarted": 2,
+    "attemptsMade": 1,
+    "stalledCounter": 1,
+    "finishedOn": 1792940973328,
+    "failedReason": null
+  },
+  "processingStarts": [
+    {
+      "generation": "A",
+      "jobId": "job-20261025t150927-ce82df",
+      "operationId": "credit-0001",
+      "attemptsStarted": 1
+    },
+    {
+      "generation": "B",
+      "jobId": "job-20261025t150927-ce82df",
+      "operationId": "credit-0001",
+      "attemptsStarted": 2
+    }
+  ],
+  "livenessTimeout": false,
+  "halt": null,
+  "states": [
+    "CREATED",
+    "PREFLIGHT_OK",
+    "INFRA_READY",
+    "A_READY",
+    "JOB_SUBMITTED",
+    "COMMIT_CONFIRMED",
+    "A_EXIT_CONFIRMED",
+    "B_READY",
+    "REDELIVERY_CONFIRMED",
+    "JOB_TERMINAL",
+    "OBSERVED",
+    "REPORTED",
+    "CLEANED"
+  ],
+  "timing": {
+    "lockDurationMs": 3000,
+    "stalledIntervalMs": 1000,
+    "maxStalledCount": 1,
+    "label": "test-only short lock timings; not production guidance"
+  },
+  "deadlines": {
+    "infraStartMs": 120000,
+    "workerReadyMs": 20000,
+    "checkpointMs": 20000,
+    "killConfirmMs": 5000,
+    "recoveryMs": 15000,
+    "completionMs": 20000,
+    "stopMs": 5000,
+    "cleanupMs": 60000
+  },
+  "diagnostics": [],
+  "cleanup": {
+    "status": "ok",
+    "steps": [
+      {
+        "name": "stop-worker-A",
+        "ok": true,
+        "detail": "already exited (SIGKILL)"
+      },
+      {
+        "name": "stop-worker-B",
+        "ok": true,
+        "detail": "stopped gracefully"
+      },
+      {
+        "name": "close-queue-observers",
+        "ok": true,
+        "detail": "closed"
+      },
+      {
+        "name": "adapter-teardown",
+        "ok": true,
+        "detail": "adapter resources removed"
+      },
+      {
+        "name": "verify-ownership",
+        "ok": true,
+        "detail": "2 owned container(s) in crl-20261025t150927-ce82df"
+      },
+      {
+        "name": "compose-down",
+        "ok": true,
+        "detail": "removed project crl-20261025t150927-ce82df"
+      },
+      {
+        "name": "verify-removed",
+        "ok": true,
+        "detail": "no owned containers or networks remain"
+      },
+      {
+        "name": "verify-no-owned-workers",
+        "ok": true,
+        "detail": "no owned worker processes remain"
+      }
+    ]
+  },
+  "artifacts": {
+    "dir": "/home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df",
+    "manifest": "/home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df/manifest.json",
+    "events": "/home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df/events.jsonl",
+    "report": "/home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df/report.json"
+  },
+  "rerun": {
+    "command": "crash-retry-lab rerun --manifest /home/kb/projects/crash-test/.crash-retry-lab/repeatability/20261025t150927-ce82df/manifest.json",
+    "of": null,
+    "inputsChanged": false
+  }
+}
