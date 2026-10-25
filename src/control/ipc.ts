@@ -3,7 +3,7 @@
  * Every message carries the per-launch session nonce plus run and generation identity;
  * the runner validates all of it before any scenario state changes.
  */
-export const IPC_PROTOCOL = 'crash-retry-lab/ipc';
+export const IPC_PROTOCOL = 'killpoint/ipc';
 export const IPC_VERSION = 1;
 
 export type WorkerMessageType =

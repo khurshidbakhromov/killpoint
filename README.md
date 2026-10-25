@@ -1,4 +1,4 @@
-# crash-retry-lab
+# killpoint
 
 **Experimental (v0.1).** Kill a BullMQ worker right after it commits a PostgreSQL effect, let BullMQ redeliver the job, and check what is durably true afterwards.
 

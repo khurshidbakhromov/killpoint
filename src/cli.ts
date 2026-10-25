@@ -12,7 +12,7 @@ import { SCENARIOS, type ScenarioKind } from './core/scenario.js';
 import { preflight } from './infra/preflight.js';
 import { formatComparison, formatSummary } from './reporting/terminal.js';
 
-const USAGE = `crash-retry-lab <command> [options]
+const USAGE = `killpoint <command> [options]
 
 Commands:
   doctor                       Check platform, Node, Docker/Compose and output directory
@@ -26,7 +26,7 @@ Commands:
 
 Common options:
   --config <path>              Trusted local config module (default: built-in reference ledger)
-  --output-dir <path>          Artifact directory (default .crash-retry-lab/runs)
+  --output-dir <path>          Artifact directory (default .killpoint/runs)
   --quiet                      Only print the final summary
 
 Exit codes: 0 PASS, 1 VIOLATION, 2 INCONCLUSIVE or ERROR.`;
@@ -48,7 +48,7 @@ function installSignalHandlers(controller: AbortController): void {
       process.stderr.write(`\n${sig} received: stopping, preserving evidence and cleaning owned resources (repeat to force exit)\n`);
       controller.abort();
     } else {
-      process.stderr.write('forced exit: owned resources may remain; use `crash-retry-lab cleanup --manifest <run>/manifest.json`\n');
+      process.stderr.write('forced exit: owned resources may remain; use `killpoint cleanup --manifest <run>/manifest.json`\n');
       process.exit(2);
     }
   };
@@ -83,7 +83,7 @@ export async function main(argv: string[]): Promise<number> {
 
   switch (command) {
     case 'doctor': {
-      const result = await preflight({ outputDir: values['output-dir'] ?? '.crash-retry-lab/runs' });
+      const result = await preflight({ outputDir: values['output-dir'] ?? '.killpoint/runs' });
       for (const check of result.checks) process.stdout.write(`${check.ok ? 'ok  ' : check.severity === 'warning' ? 'warn' : 'FAIL'} ${check.id.padEnd(11)} ${check.detail}\n`);
       process.stdout.write(result.ok ? 'Environment supported.\n' : 'Environment NOT supported; runs will exit 2.\n');
       return result.ok ? 0 : 2;

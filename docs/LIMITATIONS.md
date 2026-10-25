@@ -11,5 +11,5 @@
 - **Not deterministic replay.** "Rerun" re-executes the same failure boundary against inputs whose fingerprints and versions match. It does not replay OS scheduling, and no seed is involved.
 - **Trusted code only.** Config, adapter and processor modules execute with your privileges. Configuration is not a sandbox.
 - **No process-tree cleanup.** Processor fixtures must not spawn unmanaged grandchildren.
-- **Runner SIGKILL.** If the runner itself is killed, owned workers exit when their IPC channel closes, but containers remain until you run `crash-retry-lab cleanup --manifest <run>/manifest.json`.
+- **Runner SIGKILL.** If the runner itself is killed, owned workers exit when their IPC channel closes, but containers remain until you run `killpoint cleanup --manifest <run>/manifest.json`.
 - **Not validated on a real application (A16 pending).** There is no evidence yet that existing teams can adopt this more easily than the alternatives.

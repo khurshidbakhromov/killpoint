@@ -7,12 +7,12 @@ import type { Job } from 'bullmq';
 import { defineProcessor } from '../../../src/processor.js';
 import { createProcessor as idempotent } from '../../../examples/ledger/idempotent.js';
 
-export const SENTINEL = 'SENTINEL-crl-9d2e41';
+export const SENTINEL = 'SENTINEL-kp-9d2e41';
 
 export const createProcessor = defineProcessor(async (ctx) => {
   const inner = await idempotent(ctx);
   const pg = ctx.connections.postgres;
-  writeFileSync(join(tmpdir(), `crl-leak-${ctx.runId}.txt`), pg.password, { mode: 0o600 });
+  writeFileSync(join(tmpdir(), `kp-leak-${ctx.runId}.txt`), pg.password, { mode: 0o600 });
   return {
     async process(job: Job) {
       await inner.process(job);

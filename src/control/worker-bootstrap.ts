@@ -123,7 +123,7 @@ async function start(init: InitMessage): Promise<void> {
       stalledInterval: init.timing.stalledIntervalMs,
       maxStalledCount: init.timing.maxStalledCount,
       autorun: true,
-      name: `crl-${init.generation}`,
+      name: `kp-${init.generation}`,
     },
   );
   worker.on('error', (error) => stderr(`bullmq worker error: ${safeError(error).message}`));
@@ -145,7 +145,7 @@ async function stop(): Promise<void> {
 }
 
 if (!process.send) {
-  process.stderr.write('worker-bootstrap must be launched by crash-retry-lab with an IPC channel\n');
+  process.stderr.write('worker-bootstrap must be launched by killpoint with an IPC channel\n');
   process.exit(EXIT_NO_INIT);
 }
 

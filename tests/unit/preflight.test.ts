@@ -9,7 +9,7 @@ import { resolveConfig } from '../../src/config.js';
 import { exitCodeFor } from '../../src/core/outcomes.js';
 import { createLedgerAdapter } from '../../examples/ledger/adapter.js';
 
-const out = (): string => mkdtempSync(join(tmpdir(), 'crl-unit-'));
+const out = (): string => mkdtempSync(join(tmpdir(), 'kp-unit-'));
 
 test('A12: native Windows and macOS fail preflight with a clear message', async () => {
   for (const platform of ['win32', 'darwin'] as const) {
@@ -20,7 +20,7 @@ test('A12: native Windows and macOS fail preflight with a clear message', async 
 });
 
 test('A12: missing Docker binary fails preflight', async () => {
-  const r = await preflight({ outputDir: out(), dockerCommand: '/nonexistent/docker-crl-test' });
+  const r = await preflight({ outputDir: out(), dockerCommand: '/nonexistent/docker-kp-test' });
   assert.equal(r.ok, false);
   assert.equal(r.checks.find((c) => c.id === 'docker')!.ok, false);
 });
@@ -39,7 +39,7 @@ test('A12: a run on an unsupported platform is ERROR, exit 2, with a final repor
 });
 
 test('A12: a run with a missing docker binary is ERROR', async () => {
-  const config = resolveConfig({ adapter: createLedgerAdapter(), outputDir: out(), dockerCommand: '/nonexistent/docker-crl-test' });
+  const config = resolveConfig({ adapter: createLedgerAdapter(), outputDir: out(), dockerCommand: '/nonexistent/docker-kp-test' });
   const result = await runScenario({ config, scenario: 'baseline', processor: 'unsafe' });
   assert.equal(result.outcome, 'ERROR');
 });

@@ -1,5 +1,5 @@
 {
-  "name": "crash-retry-lab",
+  "name": "killpoint",
   "version": "0.1.0-experimental.0",
   "description": "Kill a BullMQ worker right after it commits a PostgreSQL effect, let the broker redeliver, and check the durable outcome.",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "linux"
   ],
   "bin": {
-    "crash-retry-lab": "dist/src/cli.js"
+    "killpoint": "dist/src/cli.js"
   },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

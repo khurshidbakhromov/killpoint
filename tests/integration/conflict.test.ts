@@ -15,7 +15,7 @@ test('A09: same key, different amount -> conflict, no second effect', async (t) 
   try {
     const infra = await startInfrastructure({ runId, pgPassword, deadlineMs: 120_000 });
     await waitForPostgres(infra.postgres, 60_000);
-    const namespace = 'crl_a09';
+    const namespace = 'kp_a09';
     const session = await ledgerAdapter.open({ runId, scenario: 'baseline', namespace, processor: 'idempotent', postgres: infra.postgres });
     await session.setup();
     const db = pool(infra.postgres);

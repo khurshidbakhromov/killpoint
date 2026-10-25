@@ -45,7 +45,7 @@ export async function runDemoComparison(
 
 export function readManifest(path: string): Manifest {
   const manifest = JSON.parse(readFileSync(path, 'utf8')) as Manifest;
-  if (manifest.schemaVersion !== 1 || typeof manifest.runId !== 'string') throw new Error(`${path} is not a crash-retry-lab manifest`);
+  if (manifest.schemaVersion !== 1 || typeof manifest.runId !== 'string') throw new Error(`${path} is not a killpoint manifest`);
   return manifest;
 }
 

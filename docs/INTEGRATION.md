@@ -15,7 +15,7 @@ Wrap your real processor. The changes you actually need are:
 
 ```ts
 // src/test-support/crash-processor.ts → compile to dist/test-support/crash-processor.js
-import { defineProcessor } from 'crash-retry-lab/processor';
+import { defineProcessor } from 'killpoint/processor';
 import pg from 'pg';
 import { handleInvoicePaid } from '../jobs/invoice-paid.js'; // your real handler
 
@@ -45,7 +45,7 @@ Rules:
 ## 2. Adapter (runner side)
 
 ```ts
-import { defineAdapter, ADAPTER_SCHEMA_VERSION } from 'crash-retry-lab';
+import { defineAdapter, ADAPTER_SCHEMA_VERSION } from 'killpoint';
 import { fileURLToPath } from 'node:url';
 
 export default defineAdapter({
@@ -86,8 +86,8 @@ export default { adapter, timing: { lockDurationMs: 3000, stalledIntervalMs: 100
 ```
 
 ```bash
-npx crash-retry-lab run --config ./lab.config.mjs --scenario baseline --implementation current
-npx crash-retry-lab run --config ./lab.config.mjs --scenario post-commit-crash --implementation current
+npx killpoint run --config ./lab.config.mjs --scenario baseline --implementation current
+npx killpoint run --config ./lab.config.mjs --scenario post-commit-crash --implementation current
 ```
 
 Run the baseline first. If the baseline doesn't PASS, the crash result means nothing.
@@ -95,7 +95,7 @@ Run the baseline first. If the baseline doesn't PASS, the crash result means not
 ## Programmatic use
 
 ```ts
-import { loadConfigFile, runScenario, exitCodeFor } from 'crash-retry-lab';
+import { loadConfigFile, runScenario, exitCodeFor } from 'killpoint';
 const config = await loadConfigFile('./lab.config.mjs');
 const result = await runScenario({ config, scenario: 'post-commit-crash', processor: 'current' });
 // result.outcome, result.valid, result.invariants, result.reportPath, result.cleanup

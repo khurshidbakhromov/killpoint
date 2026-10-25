@@ -30,7 +30,7 @@ The runner owns orchestration: infrastructure, the queue, the single logical job
 | Step | Evidence required |
 |---|---|
 | Preflight: Linux, Node, Docker, Compose, writable output | `preflight` event |
-| Start Compose project `crl-<run>`, wait for health, connect to PostgreSQL | `infra.ready`, server versions, image digests |
+| Start Compose project `kp-<run>`, wait for health, connect to PostgreSQL | `infra.ready`, server versions, image digests |
 | Open the queue and QueueEvents observer **before** any job exists | |
 | Adapter setup, then the initial observation | `observe.initial` |
 | Fork worker A (armed at `effect-committed`) and wait for authenticated `READY` | `worker-a-ready` |
@@ -71,7 +71,7 @@ Illegal transitions throw. A duplicate checkpoint cannot cause a second fault, b
 
 ## IPC protocol (version 1)
 
-Envelope: `{ protocol: "crash-retry-lab/ipc", version: 1, session, runId, generation, type }`. `session` is a 128-bit nonce generated for each worker launch.
+Envelope: `{ protocol: "killpoint/ipc", version: 1, session, runId, generation, type }`. `session` is a 128-bit nonce generated for each worker launch.
 
 | Direction | Type | Purpose |
 |---|---|---|
@@ -95,7 +95,7 @@ A message with the wrong session, run, generation, version or shape is rejected 
 ## Artifacts
 
 ```text
-.crash-retry-lab/runs/<run-id>/
+.killpoint/runs/<run-id>/
   manifest.json            versions, image digests, fingerprints, effective timing, owned resources, cleanup command
   events.jsonl             controller-ordered evidence (seq, wall time, monotonic elapsed)
   report.provisional.json  written before cleanup

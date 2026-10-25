@@ -11,7 +11,7 @@ test('redacts known secrets and credential shapes recursively', () => {
   const r = new Redactor([SENTINEL]);
   const out = r.redact({
     a: `failed with ${SENTINEL}`,
-    nested: [{ url: 'postgres://crl:hunter22@127.0.0.1:5432/crl' }, 'password=abc123', 'token: "xyz987"'],
+    nested: [{ url: 'postgres://kp:hunter22@127.0.0.1:5432/kp' }, 'password=abc123', 'token: "xyz987"'],
     n: 5,
   });
   const text = JSON.stringify(out);

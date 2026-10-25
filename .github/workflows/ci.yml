@@ -20,8 +20,8 @@ jobs:
       - name: Pre-pull pinned service images
         run: docker compose -f compose.yaml pull
         env:
-          CRL_RUN_ID: ci-pull
-          CRL_PG_PASSWORD: ci-pull
+          KP_RUN_ID: ci-pull
+          KP_PG_PASSWORD: ci-pull
       - run: node dist/src/cli.js doctor
       - name: Integration (real Redis, PostgreSQL, SIGKILL, broker redelivery)
         run: node --test --test-concurrency=2 --test-timeout=300000 "dist/tests/integration/**/*.test.js"
@@ -33,6 +33,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: crash-retry-lab-runs
-          path: .crash-retry-lab/
+          name: killpoint-runs
+          path: .killpoint/
           if-no-files-found: ignore

@@ -69,7 +69,7 @@ function newRunId(): string {
 }
 
 function namespaceFor(runId: string): string {
-  const ns = `crl_${runId.replace(/[^a-z0-9]/g, '_')}`;
+  const ns = `kp_${runId.replace(/[^a-z0-9]/g, '_')}`;
   if (!/^[a-z_][a-z0-9_]{0,62}$/.test(ns)) throw new Error(`generated namespace is not a safe identifier: ${ns}`);
   return ns;
 }
@@ -132,10 +132,10 @@ export async function runScenario(opts: RunOptions): Promise<RunResult> {
     environment: {},
     timing: { ...config.timing },
     deadlines: { ...config.deadlines },
-    ownedResources: { composeProject: projectName(runId), queuePrefix: 'crl', queueName: `q-${runId}`, namespace, jobId, workers: [] },
+    ownedResources: { composeProject: projectName(runId), queuePrefix: 'kp', queueName: `q-${runId}`, namespace, jobId, workers: [] },
     cleanup: {
-      command: `crash-retry-lab cleanup --manifest ${paths.manifest}`,
-      manual: `CRL_RUN_ID=${runId} CRL_PG_PASSWORD=x docker compose -p ${projectName(runId)} -f <crash-retry-lab>/compose.yaml down --volumes --remove-orphans`,
+      command: `killpoint cleanup --manifest ${paths.manifest}`,
+      manual: `KP_RUN_ID=${runId} KP_PG_PASSWORD=x docker compose -p ${projectName(runId)} -f <killpoint>/compose.yaml down --volumes --remove-orphans`,
     },
     rerunOf: opts.rerunOf?.runId ?? null,
     inputsChanged: opts.rerunOf?.inputsChanged ?? false,
@@ -454,7 +454,7 @@ export async function runScenario(opts: RunOptions): Promise<RunResult> {
       operationId: typeof e.data?.operationId === 'string' ? e.data.operationId : null,
       attemptsStarted: typeof e.data?.attemptsStarted === 'number' ? e.data.attemptsStarted : null,
     }));
-  const rerunCommand = `crash-retry-lab rerun --manifest ${paths.manifest}`;
+  const rerunCommand = `killpoint rerun --manifest ${paths.manifest}`;
   const buildReport = (cleanup: CleanupReport, final: boolean): RunReport => {
     const finishedAt = final ? new Date() : null;
     return redactor.redact({

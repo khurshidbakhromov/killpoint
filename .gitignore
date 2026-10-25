@@ -1,3 +1,5 @@
+.killpoint/
+# Run artifacts from before the rename to killpoint (local only)
 .crash-retry-lab/
 node_modules/
 dist/

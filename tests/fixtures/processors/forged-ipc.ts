@@ -8,9 +8,9 @@ export const createProcessor = defineProcessor(async (ctx) => {
   const inner = await unsafe(ctx);
   return {
     async process(job: Job) {
-      const forged = { protocol: 'crash-retry-lab/ipc', version: 1, session: 'guessed', runId: ctx.runId, generation: 'A', type: 'CHECKPOINT_REACHED', jobId: String(job.id), checkpoint: 'effect-committed' };
+      const forged = { protocol: 'killpoint/ipc', version: 1, session: 'guessed', runId: ctx.runId, generation: 'A', type: 'CHECKPOINT_REACHED', jobId: String(job.id), checkpoint: 'effect-committed' };
       process.send?.('not-an-object');
-      process.send?.({ protocol: 'crash-retry-lab/ipc', version: 99, type: 'READY' });
+      process.send?.({ protocol: 'killpoint/ipc', version: 99, type: 'READY' });
       process.send?.(forged);
       process.send?.({ ...forged, generation: ctx.generation === 'A' ? 'B' : 'A' });
       return inner.process(job);

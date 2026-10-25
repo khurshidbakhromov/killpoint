@@ -3,7 +3,7 @@
 Requirements: Linux (or WSL2), Node.js 24, Docker Engine with the Compose plugin. The first run pulls `redis:7.4.7-alpine` and `postgres:17.7-alpine`.
 
 ```bash
-git clone <this repository> crash-retry-lab && cd crash-retry-lab
+git clone <this repository> killpoint && cd killpoint
 npm ci
 npm run build
 node dist/src/cli.js doctor
@@ -32,7 +32,7 @@ node dist/src/cli.js run --scenario post-commit-crash --implementation unsafe
 echo $?   # 1 = VIOLATION
 ```
 
-Real output from this repository (paths shortened):
+Real output from this repository (paths shortened). It was captured before the rename to `killpoint`, and only the tool name in the paths has been updated:
 
 ```text
 Scenario:  post-commit-crash    Experiment: VALID
@@ -46,15 +46,15 @@ Job:       completed, attemptsStarted 2, stalledCounter 1
   ok   Unrelated tenant/operation state unchanged: ...
 Reason:    invariant failed: at-most-one-effect
 Reason:    invariant failed: exact-account-delta
-Evidence:  .crash-retry-lab/runs/20261025t145737-81b7ee/report.json
-Rerun:     crash-retry-lab rerun --manifest .crash-retry-lab/runs/20261025t145737-81b7ee/manifest.json
+Evidence:  .killpoint/runs/20261025t145737-81b7ee/report.json
+Rerun:     killpoint rerun --manifest .killpoint/runs/20261025t145737-81b7ee/manifest.json
 ```
 
 Exit codes: `0` PASS, `1` VIOLATION, `2` INCONCLUSIVE or ERROR.
 
 ## Evidence
 
-Every run writes `.crash-retry-lab/runs/<run-id>/`:
+Every run writes `.killpoint/runs/<run-id>/`:
 - `manifest.json`: versions, image digests, fingerprints, timing, owned resources and the cleanup command;
 - `events.jsonl`: the ordered evidence;
 - `report.json`: the final verdict, the evidence checklist, observations and invariants.
@@ -64,8 +64,8 @@ Complete reports from real runs are in [`docs/examples/`](examples/).
 ## Rerun and recovery
 
 ```bash
-crash-retry-lab rerun --manifest .crash-retry-lab/runs/<id>/manifest.json
-crash-retry-lab cleanup --manifest .crash-retry-lab/runs/<id>/manifest.json   # only after a runner crash
+killpoint rerun --manifest .killpoint/runs/<id>/manifest.json
+killpoint cleanup --manifest .killpoint/runs/<id>/manifest.json   # only after a runner crash
 ```
 
 `rerun` refuses to run if the config, processor module, compose file, lockfile, Node, BullMQ, pg or tool version has changed. Pass `--allow-changed-inputs` to run it anyway as a new experiment, which is labelled as such.

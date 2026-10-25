@@ -30,7 +30,7 @@ export function requireDocker(t: TestContext): boolean {
 }
 
 export function config(overrides: Partial<LabConfig> = {}): ResolvedConfig {
-  return resolveConfig({ adapter: fixtureAdapter, outputDir: mkdtempSync(join(tmpdir(), 'crl-it-')), ...overrides });
+  return resolveConfig({ adapter: fixtureAdapter, outputDir: mkdtempSync(join(tmpdir(), 'kp-it-')), ...overrides });
 }
 
 export function evidence(result: RunResult, id: string): boolean | undefined {
@@ -54,5 +54,5 @@ export function artifactTexts(dir: string): Record<string, string> {
 }
 
 export function ownedContainers(runId: string): string[] {
-  return execFileSync('docker', ['ps', '-a', '-q', '--filter', `label=io.crash-retry-lab.run-id=${runId}`], { encoding: 'utf8' }).split('\n').filter(Boolean);
+  return execFileSync('docker', ['ps', '-a', '-q', '--filter', `label=io.killpoint.run-id=${runId}`], { encoding: 'utf8' }).split('\n').filter(Boolean);
 }

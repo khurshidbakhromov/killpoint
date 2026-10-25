@@ -4,7 +4,7 @@ import { run, type ExecResult } from './exec.js';
 import type { PostgresSettings, RedisSettings } from '../control/ipc.js';
 
 export const COMPOSE_FILE = fileURLToPath(new URL('../../../compose.yaml', import.meta.url));
-export const RUN_LABEL = 'io.crash-retry-lab.run-id';
+export const RUN_LABEL = 'io.killpoint.run-id';
 const RUN_ID_PATTERN = /^[a-z0-9][a-z0-9-]{5,62}$/;
 const PLACEHOLDER_PASSWORD = 'cleanup-placeholder';
 
@@ -31,7 +31,7 @@ export interface ComposeOptions {
 
 export function projectName(runId: string): string {
   if (!RUN_ID_PATTERN.test(runId)) throw new Error(`invalid run id for compose project: ${runId}`);
-  return `crl-${runId}`;
+  return `kp-${runId}`;
 }
 
 function composeArgs(opts: ComposeOptions, ...rest: string[]): string[] {
@@ -39,7 +39,7 @@ function composeArgs(opts: ComposeOptions, ...rest: string[]): string[] {
 }
 
 function composeEnv(runId: string, pgPassword: string): NodeJS.ProcessEnv {
-  return { ...process.env, CRL_RUN_ID: runId, CRL_PG_PASSWORD: pgPassword };
+  return { ...process.env, KP_RUN_ID: runId, KP_PG_PASSWORD: pgPassword };
 }
 
 function failure(step: string, result: ExecResult): Error {
@@ -84,7 +84,7 @@ export async function startInfrastructure(
   return {
     project: projectName(opts.runId),
     redis: { host: '127.0.0.1', port: redisPort },
-    postgres: { host: '127.0.0.1', port: pgPort, user: 'crl', password: opts.pgPassword, database: 'crl' },
+    postgres: { host: '127.0.0.1', port: pgPort, user: 'kp', password: opts.pgPassword, database: 'kp' },
     containers: await inspectContainers(opts, env),
   };
 }

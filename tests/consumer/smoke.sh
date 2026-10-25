@@ -4,7 +4,7 @@
 # The worker bootstrap must launch from the installed package's compiled JavaScript.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-WORK="$(mktemp -d "${TMPDIR:-/tmp}/crl-consumer-XXXXXX")"
+WORK="$(mktemp -d "${TMPDIR:-/tmp}/kp-consumer-XXXXXX")"
 trap 'rm -rf "$WORK"' EXIT
 
 cd "$ROOT"
@@ -15,14 +15,14 @@ echo "packed $TARBALL"
 cd "$WORK"
 npm init -y >/dev/null
 npm install --no-audit --no-fund "./$TARBALL" >/dev/null
-test ! -e node_modules/crash-retry-lab/src || { echo "TypeScript sources leaked into the package" >&2; exit 1; }
-test -f node_modules/crash-retry-lab/dist/src/control/worker-bootstrap.js
+test ! -e node_modules/killpoint/src || { echo "TypeScript sources leaked into the package" >&2; exit 1; }
+test -f node_modules/killpoint/dist/src/control/worker-bootstrap.js
 
 # Library import from the consumer project.
-node --input-type=module -e "import('crash-retry-lab').then(m => { if (typeof m.runScenario !== 'function') process.exit(1); })"
+node --input-type=module -e "import('killpoint').then(m => { if (typeof m.runScenario !== 'function') process.exit(1); })"
 
 set +e
-npx --no-install crash-retry-lab run --scenario post-commit-crash --implementation idempotent --output-dir "$WORK/runs"
+npx --no-install killpoint run --scenario post-commit-crash --implementation idempotent --output-dir "$WORK/runs"
 CODE=$?
 set -e
 echo "consumer run exit code: $CODE"

@@ -145,7 +145,7 @@ export function resolveConfig(input: LabConfig, source: ResolvedConfig['source']
 
   return {
     adapter: input.adapter,
-    outputDir: resolve(input.outputDir ?? '.crash-retry-lab/runs'),
+    outputDir: resolve(input.outputDir ?? '.killpoint/runs'),
     timing: {
       ...timing,
       label: timing.lockDurationMs < 30_000 || timing.stalledIntervalMs < 30_000 ? TIMING_LABEL : 'BullMQ default-scale timings',

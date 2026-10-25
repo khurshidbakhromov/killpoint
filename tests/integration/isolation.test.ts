@@ -48,11 +48,11 @@ test('A11: interrupt while waiting for recovery leaves a partial report and no o
 
 test('A13: secrets never reach default artifacts; unrelated Docker resources survive', async (t) => {
   if (!requireDocker(t)) return;
-  const unrelated = `crl-unrelated-${process.pid}-${Date.now()}`;
-  execFileSync('docker', ['network', 'create', '--label', 'io.crash-retry-lab.run-id=unrelated', unrelated], { stdio: 'ignore' });
+  const unrelated = `kp-unrelated-${process.pid}-${Date.now()}`;
+  execFileSync('docker', ['network', 'create', '--label', 'io.killpoint.run-id=unrelated', unrelated], { stdio: 'ignore' });
   try {
     const r = await runScenario({ config: config(), scenario: 'baseline', processor: 'leaky' });
-    const leakFile = join(tmpdir(), `crl-leak-${r.runId}.txt`);
+    const leakFile = join(tmpdir(), `kp-leak-${r.runId}.txt`);
     const password = readFileSync(leakFile, 'utf8');
     rmSync(leakFile);
     assert.ok(password.length >= 16);

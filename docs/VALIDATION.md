@@ -38,6 +38,18 @@ Note: Docker Desktop's WSL integration dropped out partway through the session. 
 | SIGKILL to the CLI mid-run | gated worker exited on channel loss (0 worker processes 1 s later); 2 containers remained; `cleanup --manifest` verified ownership, removed them, and verified nothing remained; exit 0 |
 | CLI run of the `before-commit` fixture through a config file | INCONCLUSIVE; CLI exited after 9.5 s (includes the 5 s stop deadline for the gated worker) |
 
+## After the rename to `killpoint` (2026-10-25)
+
+The results above were recorded under the provisional name "crash-retry-lab" (the `crl` prefixes in recorded artifacts). After the rename (DECISIONS #15), the following were re-run on the renamed code:
+
+| Command | Result |
+|---|---|
+| `npm test` (unit + integration) | 45/45 unit and 14/14 integration pass; exit 0 |
+| `npm run test:consumer` | `killpoint-0.1.0-experimental.0.tgz` installed; `npx killpoint run … idempotent` gives PASS, exit 0 |
+| `node dist/src/cli.js demo --compare` | PASS / VIOLATION / PASS; exit 0; compose project `kp-<run-id>`; 0 owned containers left |
+
+A15 (30 runs) was **not** repeated after the rename; its record is from the pre-rename code, which differed only in names.
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |

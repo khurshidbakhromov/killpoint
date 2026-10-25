@@ -84,6 +84,6 @@ export function rerunDifferences(recorded: Manifest, current: { fingerprints: Fi
   for (const key of ['node', 'bullmq', 'pg'] as const) {
     if (recorded.versions[key] !== current.versions[key]) diffs.push(`${key} ${recorded.versions[key]} -> ${current.versions[key]}`);
   }
-  if (recorded.tool.version !== current.tool.version) diffs.push(`crash-retry-lab ${recorded.tool.version} -> ${current.tool.version}`);
+  if (recorded.tool.version !== current.tool.version) diffs.push(`killpoint ${recorded.tool.version} -> ${current.tool.version}`);
   return diffs;
 }

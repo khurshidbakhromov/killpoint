@@ -6,7 +6,7 @@ import type { RedisSettings, WorkerTiming } from '../control/ipc.js';
 
 const require = createRequire(import.meta.url);
 
-export const QUEUE_PREFIX = 'crl';
+export const QUEUE_PREFIX = 'kp';
 const OBSERVED_QUEUE_EVENTS = ['added', 'waiting', 'active', 'stalled', 'completed', 'failed', 'retries-exhausted'] as const;
 const ALL_STATES = ['wait', 'active', 'delayed', 'completed', 'failed', 'prioritized', 'waiting-children'] as const;
 
@@ -71,7 +71,7 @@ export class BullmqRunQueue {
   }
 
   async addJob(jobId: string, data: JsonObject): Promise<string> {
-    const job = await this.q.add('crash-retry-lab', data, { jobId, attempts: 1, removeOnComplete: false, removeOnFail: false });
+    const job = await this.q.add('killpoint', data, { jobId, attempts: 1, removeOnComplete: false, removeOnFail: false });
     return String(job.id);
   }
 

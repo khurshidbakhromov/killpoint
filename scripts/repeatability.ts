@@ -12,7 +12,7 @@ import { ledgerAdapter } from '../examples/ledger/adapter.js';
 
 const cycles = Number(process.argv[2] ?? 10);
 const out = resolve(process.argv[3] ?? 'docs/evidence/repeatability.json');
-const config = resolveConfig({ adapter: ledgerAdapter, outputDir: resolve('.crash-retry-lab/repeatability') });
+const config = resolveConfig({ adapter: ledgerAdapter, outputDir: resolve('.killpoint/repeatability') });
 const controller = new AbortController();
 process.on('SIGINT', () => controller.abort());
 
