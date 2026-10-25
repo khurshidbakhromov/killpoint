@@ -60,6 +60,14 @@ Run [40214085573](https://github.com/khurshidbakhromov/killpoint/actions/runs/40
 
 The only warning was the deprecated Node 20 runtime in `actions/*@v4`. The actions were then updated to v7.
 
+## Image upgrade: Redis 8.10.2 and PostgreSQL 18.6 (2026-10-26)
+
+The environment table and the A15 record above are from Redis 7.4.7 and PostgreSQL 17.7. After moving to `redis:8.10.2-alpine` (`sha256:0bf6577d7774e592b29d093e3ac9390eb91e13d72c21e506afce736de5e0eeb0`) and `postgres:18.6-alpine` (`sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5`), the following were run locally on WSL2:
+- `npm test`: 45/45 unit and 14/14 integration pass;
+- `demo --compare`: PASS / VIOLATION / PASS, with the manifest recording `redisServer 8.10.2` and `postgresServer 18.6`.
+
+A15 was not repeated on the new images.
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |
