@@ -8,6 +8,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 - Repository community files: contributing guide, Code of Conduct (Contributor Covenant 2.1), security policy, support guide, issue and PR templates, CODEOWNERS and Dependabot configuration.
 
 ### Changed
+- Test services: Redis 7.4.7 → 8.10.2 and PostgreSQL 17.7 → 18.6. The PostgreSQL tmpfs moved to `/var/lib/postgresql`, which the 18 image requires.
 - CI uses `actions/checkout`, `actions/setup-node` and `actions/upload-artifact` v7 (the v4 releases ran on the deprecated Node 20 runtime).
 
 ## [0.1.0-experimental.0] - 2026-10-25
