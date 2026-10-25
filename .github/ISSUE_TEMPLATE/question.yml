@@ -1,0 +1,16 @@
+name: Question
+description: Usage question or "is this a bug?"
+labels: [question]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: "`killpoint doctor` output, command used, relevant report.json excerpt (check for anything private)."
+      render: text

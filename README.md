@@ -1,5 +1,7 @@
 # killpoint
 
+[![ci](https://github.com/khurshidbakhromov/killpoint/actions/workflows/ci.yml/badge.svg)](https://github.com/khurshidbakhromov/killpoint/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 **Experimental (v0.1).** Kill a BullMQ worker right after it commits a PostgreSQL effect, let BullMQ redeliver the job, and check what is durably true afterwards.
 
 > Trigger a specific failure boundary in your worker, observe the durable outcome after recovery, and keep a repeatable regression case.
@@ -69,6 +71,10 @@ Crash testing, deterministic simulation and the "payment then crash" scenario ar
 - **[payfuzz](https://github.com/Subhooo5/payfuzz)** fuzzes duplicate webhook deliveries.
 
 This project's hypothesis, which is not yet proven, is that a small TypeScript library that brings **your existing processor** into a real-process failure test, with an explicit experiment-validity layer, is easier to adopt. See [DECISIONS.md](docs/DECISIONS.md#m0-prior-art-and-overlap-checked-2026-10-25).
+
+## Contributing
+
+The most useful contribution right now is **trying killpoint on a real BullMQ application** and filing an [integration report](https://github.com/khurshidbakhromov/killpoint/issues/new?template=integration_report.yml). See [CONTRIBUTING.md](CONTRIBUTING.md), the [Code of Conduct](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) for reporting vulnerabilities privately.
 
 ## Status
 

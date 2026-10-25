@@ -1,0 +1,33 @@
+name: Feature or scenario proposal
+description: Propose a new failure scenario, adapter, platform or capability
+labels: [enhancement, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please read the Scope section of CONTRIBUTING.md first. New scenarios and brokers are gated on real-user validation; concrete evidence of need helps most.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What failure or need does this address?
+      description: Describe the real situation, ideally from an actual application, not a hypothetical one.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: For a scenario, include the failure boundary, how the runner would confirm it really happened (validity evidence), and what makes the result INCONCLUSIVE.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Including existing tools (Faultline, Déjà, Chronos, ...) or upstream changes.
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Contribution
+      options:
+        - label: I'm willing to help implement or test this against a real application

@@ -4,6 +4,25 @@
   "description": "Kill a BullMQ worker right after it commits a PostgreSQL effect, let the broker redeliver, and check the durable outcome.",
   "license": "MIT",
   "author": "Khurshid",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khurshidbakhromov/killpoint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/khurshidbakhromov/killpoint/issues"
+  },
+  "homepage": "https://github.com/khurshidbakhromov/killpoint#readme",
+  "keywords": [
+    "bullmq",
+    "postgresql",
+    "fault-injection",
+    "crash-testing",
+    "idempotency",
+    "at-least-once",
+    "redelivery",
+    "sigkill",
+    "testing"
+  ],
   "private": true,
   "type": "module",
   "engines": {
@@ -38,7 +57,8 @@
     "compose.yaml",
     "README.md",
     "LICENSE",
-    "docs"
+    "docs",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json && chmod +x dist/src/cli.js",

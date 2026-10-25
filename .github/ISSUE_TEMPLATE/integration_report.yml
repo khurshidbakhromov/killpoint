@@ -1,0 +1,37 @@
+name: Integration report (tried it on a real app)
+description: Tell us how integrating killpoint with your BullMQ application went. This is the most useful feedback right now.
+labels: [integration-report]
+body:
+  - type: markdown
+    attributes:
+      value: Share only what you are allowed to share. No proprietary code or data is needed.
+  - type: textarea
+    id: app
+    attributes:
+      label: Application shape
+      description: What the processor does (generic terms are fine), BullMQ/Node/PostgreSQL versions, how effects are committed.
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: Changes you needed
+      description: Where you placed the checkpoint, any refactor needed to run code after commit, and approximate lines changed.
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Rough setup time
+      placeholder: e.g. 45 minutes
+  - type: textarea
+    id: result
+    attributes:
+      label: What did killpoint report?
+      description: Outcome(s), and whether you believe them. Did it find a real bug? Was anything INCONCLUSIVE?
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: What was confusing or missing?

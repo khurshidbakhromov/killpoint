@@ -1,0 +1,56 @@
+name: Bug report
+description: Something killpoint did wrong (wrong verdict, crash, leftover resources, leaked secret...)
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security problems: **do not file here**; see SECURITY.md.
+        The most serious bugs are runs that reached PASS or VIOLATION with incomplete evidence. Please flag those clearly.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options:
+        - Wrong verdict (PASS/VIOLATION when evidence was incomplete, or vice versa)
+        - Harness crash / ERROR
+        - Leftover containers, processes or other resources
+        - Secret or credential in an artifact
+        - CLI / docs / other
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Command line, config (remove anything private), processor or adapter shape.
+      placeholder: |
+        killpoint run --config ./lab.config.mjs --scenario post-commit-crash --implementation current
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Terminal summary and/or report.json excerpt
+      description: Reports are redacted by default, but please check before pasting. Include `validity`, `halt`, `reasons` and `cleanup`.
+      render: text
+  - type: textarea
+    id: doctor
+    attributes:
+      label: "`killpoint doctor` output"
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: killpoint commit or version
+      placeholder: e.g. 0.1.0-experimental.0 @ 27d881d
+    validations:
+      required: true
