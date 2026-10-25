@@ -31,7 +31,7 @@ No authorized real application was supplied, so the **reference ledger fixture**
 | Choice | Pinned | Reason |
 |---|---|---|
 | Node.js | 24.x (tested 24.21.0) | Handoff default. `engines` is `>=24 <25`; other majors produce a preflight warning, and below 24 is an error. |
-| TypeScript | **6.0.3**, not 7.0.2 | 7.0 (the native compiler) is `latest`, but 6.0.3 is the mature line and the strict ESM output is identical for this code. The choice can be revisited. |
+| TypeScript | **7.0.2** (was 6.0.3 until 2026-10-26) | Moved after the full unit, integration and consumer suite passed on 7.0.2 with `@types/node` 24. |
 | BullMQ | 6.4.2 (exact) | Current release. Its stalled-recovery semantics were verified in source and by experiment (below). |
 | ioredis | 5.11.1 | BullMQ 6 makes the Redis client a peer dependency (`ioredis >=5` or `redis >=5`). 5.x is the established line; ioredis 6.0.0 was only 13 days old. |
 | pg | 8.23.1 | The handoff names the `pg` driver for the reference fixture. |

@@ -141,7 +141,7 @@ async function stop(): Promise<void> {
     stderr(`error while stopping: ${safeError(error).message}`);
   }
   await send('WORKER_STOPPED', {});
-  process.disconnect();
+  process.disconnect?.();
 }
 
 if (!process.send) {
