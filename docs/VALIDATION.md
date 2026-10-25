@@ -48,7 +48,7 @@ The results above were recorded under the provisional name "crash-retry-lab" (th
 | `npm run test:consumer` | `killpoint-0.1.0-experimental.0.tgz` installed; `npx killpoint run … idempotent` gives PASS, exit 0 |
 | `node dist/src/cli.js demo --compare` | PASS / VIOLATION / PASS; exit 0; compose project `kp-<run-id>`; 0 owned containers left |
 
-A15 (30 runs) was **not** repeated after the rename; its record is from the pre-rename code, which differed only in names.
+A15 (30 runs) was not repeated immediately after the rename. It was repeated on 2026-10-26 on the current stack (see below).
 
 ## GitHub Actions CI (2026-10-25)
 
@@ -66,7 +66,7 @@ The environment table and the A15 record above are from Redis 7.4.7 and PostgreS
 - `npm test`: 45/45 unit and 14/14 integration pass;
 - `demo --compare`: PASS / VIOLATION / PASS, with the manifest recording `redisServer 8.10.2` and `postgresServer 18.6`.
 
-A15 was not repeated on the new images.
+A15 was later repeated on the new images (see below).
 
 ## TypeScript 7.0.2 and ioredis 6.0.0 (2026-10-26)
 
@@ -78,6 +78,13 @@ On the combined stack (`typescript` 7.0.2, `@types/node` 24.19.2, ioredis 6.0.0,
 - `npm run test:consumer`: PASS, exit 0.
 
 Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (TS2722: `process.disconnect` became optional), so `@types/node` majors are now held to 24.x, and the call was made defensive (`process.disconnect?.()`).
+
+## A15 repeated on the current stack (2026-10-26)
+
+`node dist/scripts/repeatability.js 10 docs/evidence/repeatability-2026-10-26.json`, run on commit `1aa17b6` (clean tree, recorded in every run manifest). Stack: Node 24.22.1, TypeScript 7.0.2, BullMQ 6.4.2, ioredis 6.0.0, pg 8.23.1, Redis 8.10.2, PostgreSQL 18.6, on WSL2.
+- **30 runs, 30 matched expectations:** baseline PASS ×10, unsafe VIOLATION ×10, idempotent PASS ×10.
+- 0 inconclusive, 0 reruns, 0 owned containers left afterwards.
+- Durations: min 3440, median 6651, max 7711 ms.
 
 ## Acceptance matrix
 
@@ -97,7 +104,7 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 | A12 missing Docker / unsupported OS | **Verified** | `win32` and `darwin` preflight fail; missing docker binary gives ERROR, exit 2; plus the real Docker outage noted above |
 | A13 redaction and cleanup scope | **Verified** | the run's real PostgreSQL password and a sentinel are absent from every default artifact while `stderr.log` shows `[REDACTED]`; an unrelated labelled Docker network survived |
 | A14 packed consumer | **Verified** (local) | `tests/consumer/smoke.sh` |
-| A15 repeatability | **Verified** (local) | 30 runs, 30 matched, 0 inconclusive, 0 reruns. Duration min 3441 / median 6664 / max 8571 ms. `docs/evidence/repeatability.json` |
+| A15 repeatability | **Verified** (local) | Original stack: 30/30, min 3441 / median 6664 / max 8571 ms (`docs/evidence/repeatability.json`). Current stack (2026-10-26): 30/30, min 3440 / median 6651 / max 7711 ms (`docs/evidence/repeatability-2026-10-26.json`). No inconclusive runs, no reruns |
 | A16 real application | **Pending** | no authorized real application was available. Real-world usefulness is **not** claimed |
 
 ## Not verified
