@@ -130,6 +130,7 @@ export async function runScenario(opts: RunOptions): Promise<RunResult> {
     versions: { ...libraryVersions(), redisServer: null, postgresServer: null },
     images: [],
     environment: {},
+    workerExecArgv: [...config.workerExecArgv],
     timing: { ...config.timing },
     deadlines: { ...config.deadlines },
     ownedResources: { composeProject: projectName(runId), queuePrefix: 'kp', queueName: `q-${runId}`, namespace, jobId, workers: [] },
@@ -198,6 +199,7 @@ export async function runScenario(opts: RunOptions): Promise<RunResult> {
           log.record({ kind: 'worker.exit', source: 'runner', generation, data: { code: info.code, signal: info.signal } });
         },
       },
+      { execArgv: config.workerExecArgv },
     );
     workers.push(worker);
     manifest.ownedResources.workers.push({ generation, pid: worker.pid ?? null });

@@ -40,6 +40,7 @@ export interface Manifest {
   versions: { node: string; bullmq: string; pg: string; redisServer: string | null; postgresServer: string | null };
   images: ContainerIdentity[];
   environment: JsonObject;
+  workerExecArgv: string[];
   timing: JsonObject;
   deadlines: JsonObject;
   ownedResources: { composeProject: string; queuePrefix: string; queueName: string; namespace: string; jobId: string; workers: Array<{ generation: string; pid: number | null }> };

@@ -105,7 +105,7 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 | A13 redaction and cleanup scope | **Verified** | the run's real PostgreSQL password and a sentinel are absent from every default artifact while `stderr.log` shows `[REDACTED]`; an unrelated labelled Docker network survived |
 | A14 packed consumer | **Verified** (local) | `tests/consumer/smoke.sh` |
 | A15 repeatability | **Verified** (local) | Original stack: 30/30, min 3441 / median 6664 / max 8571 ms (`docs/evidence/repeatability.json`). Current stack (2026-10-26): 30/30, min 3440 / median 6651 / max 7711 ms (`docs/evidence/repeatability-2026-10-26.json`). No inconclusive runs, no reruns |
-| A16 real application | **Pending** | no authorized real application was available. Real-world usefulness is **not** claimed |
+| A16 real application | **Partially verified** | Integrated locally with one open-source application, Optio (MIT, commit `e1ff7fa`), with 0 lines of Optio changed. Its real schedule-trigger sweep gives PASS ×5 under the crash; a split-transaction mutation of its functions gives VIOLATION ×5 (lost occurrence). One killpoint change was needed (`workerExecArgv`). See [validation/A16-optio.md](validation/A16-optio.md). Adoption by an independent user or team is still **not** shown |
 
 ## Not verified
 
@@ -117,4 +117,4 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 
 ## Open items and blockers
 
-1. A16: integrate with one authorized real BullMQ application and measure setup time and lines changed against Faultline.
+1. A16 remainder: an integration by someone other than killpoint's author; a real application that has the duplicate bug; Node 26 support (Optio requires it).

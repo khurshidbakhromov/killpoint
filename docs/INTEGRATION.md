@@ -92,6 +92,32 @@ npx killpoint run --config ./lab.config.mjs --scenario post-commit-crash --imple
 
 Run the baseline first. If the baseline doesn't PASS, the crash result means nothing.
 
+## Applications that need Node flags (TypeScript-source monorepos)
+
+Some monorepos export **TypeScript source** from their workspace packages and run in production through a loader such as `tsx`. Plain `node` cannot import those packages, and the worker fails during startup (the run is ERROR, never a verdict). Give the workers the same loader:
+
+```js
+export default { adapter, workerExecArgv: ['--import', 'tsx'] };
+```
+
+`workerExecArgv` is passed only to the worker processes killpoint owns (A and B) and is recorded in every manifest. Worker processes never inherit the runner's own Node flags.
+
+## When your code has no after-commit hook
+
+If the commit happens deep inside application code, you can sometimes place the seam without editing the application. Wrap its transaction helper from your processor module, *before* importing the code that uses it:
+
+```js
+const { db } = await import('your-app/dist/db/client.js');
+const transaction = db.transaction.bind(db);
+db.transaction = async (...args) => {
+  const result = await transaction(...args);   // committed
+  await ctx.checkpoint('effect-committed');    // only the first call blocks, and only in worker A
+  return result;
+};
+```
+
+This is only correct when the **first** transaction in the job is the effect you mean to test. Your adapter's `confirmCommitted()` must check that effect independently, so a misplaced seam makes the run INCONCLUSIVE instead of giving a false PASS. Applications that build their database client from environment variables at import time also need those variables set (from `ctx.connections`) before the dynamic import. [`docs/validation/A16-optio.md`](validation/A16-optio.md) is a worked example on a real application.
+
 ## Programmatic use
 
 ```ts

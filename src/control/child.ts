@@ -32,13 +32,14 @@ export class OwnedWorker {
     runId: string,
     init: Omit<InitMessage, 'protocol' | 'version' | 'session' | 'runId' | 'generation' | 'type'>,
     private readonly hooks: OwnedWorkerHooks,
-    bootstrapPath: string = BOOTSTRAP_PATH,
+    opts: { execArgv?: readonly string[]; bootstrapPath?: string } = {},
   ) {
     this.identity = { session: randomBytes(16).toString('hex'), runId, generation };
-    this.child = fork(bootstrapPath, [], {
+    this.child = fork(opts.bootstrapPath ?? BOOTSTRAP_PATH, [], {
       stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
       serialization: 'json',
-      execArgv: [],
+      // Only flags the trusted config asked for (e.g. a TypeScript loader); never the runner's own.
+      execArgv: [...(opts.execArgv ?? [])],
       // Minimal environment: connection settings arrive over IPC, never via env or argv.
       env: { PATH: process.env.PATH ?? '', NODE_ENV: 'test' },
     });

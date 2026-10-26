@@ -1,0 +1,247 @@
+{
+  "experiment": "A16 Optio repeat (5x each case)",
+  "optioCommit": "e1ff7fa",
+  "killpointCommit": "feat/worker-exec-argv (pre-merge)",
+  "rows": [
+    {
+      "runId": "20261025t222719-c56f01",
+      "scenario": "baseline",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 10990,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222731-324a5c",
+      "scenario": "post-commit-crash",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 15443,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222747-f0cbdf",
+      "scenario": "post-commit-crash",
+      "processor": "split-mutation",
+      "outcome": "VIOLATION",
+      "valid": true,
+      "durationMs": 15572,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "fail",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "fail",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222803-60c4ed",
+      "scenario": "baseline",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 11182,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222814-2bebb9",
+      "scenario": "post-commit-crash",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 14674,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222829-28de66",
+      "scenario": "post-commit-crash",
+      "processor": "split-mutation",
+      "outcome": "VIOLATION",
+      "valid": true,
+      "durationMs": 14331,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "fail",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "fail",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222844-a2b318",
+      "scenario": "baseline",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 12074,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222856-44f11c",
+      "scenario": "post-commit-crash",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 14567,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222911-512c6e",
+      "scenario": "post-commit-crash",
+      "processor": "split-mutation",
+      "outcome": "VIOLATION",
+      "valid": true,
+      "durationMs": 15386,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "fail",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "fail",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222927-58b49a",
+      "scenario": "baseline",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 10968,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222938-6311c2",
+      "scenario": "post-commit-crash",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 15591,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t222954-6ba5ad",
+      "scenario": "post-commit-crash",
+      "processor": "split-mutation",
+      "outcome": "VIOLATION",
+      "valid": true,
+      "durationMs": 15435,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "fail",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t223010-e3e39b",
+      "scenario": "baseline",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 11072,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t223021-ee54b0",
+      "scenario": "post-commit-crash",
+      "processor": "optio",
+      "outcome": "PASS",
+      "valid": true,
+      "durationMs": 15533,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "pass",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "pass",
+        "control-trigger-unchanged": "pass"
+      }
+    },
+    {
+      "runId": "20261025t223037-09645c",
+      "scenario": "post-commit-crash",
+      "processor": "split-mutation",
+      "outcome": "VIOLATION",
+      "valid": true,
+      "durationMs": 14394,
+      "invariants": {
+        "job-completed-within-deadline": "pass",
+        "at-most-one-occurrence": "pass",
+        "at-least-one-occurrence": "fail",
+        "schedule-advanced": "pass",
+        "no-other-occurrences": "fail",
+        "control-trigger-unchanged": "pass"
+      }
+    }
+  ]
+}

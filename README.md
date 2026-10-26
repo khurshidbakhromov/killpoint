@@ -78,4 +78,4 @@ The most useful contribution right now is **trying killpoint on a real BullMQ ap
 
 ## Status
 
-Experimental and unpublished. Validated only against the reference ledger fixture, on WSL2 and on GitHub Actions Linux CI. Real-application validation (A16) is pending. MIT licensed.
+Experimental and unpublished. Validated against the reference ledger fixture (WSL2 and GitHub Actions Linux CI) and, by its author, against one real open-source application: [Optio's schedule-trigger sweep](docs/validation/A16-optio.md), where it confirmed a crash-safe design and caught a split-transaction mutation. Independent adoption is not yet shown. MIT licensed.

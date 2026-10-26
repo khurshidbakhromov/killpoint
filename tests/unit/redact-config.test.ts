@@ -46,6 +46,14 @@ test('config: rejects unknown keys, bad types and non-compiled processors', () =
   assert.throws(() => resolveConfig({ adapter: { id: 'x' } } as never), ConfigError);
 });
 
+test('config: workerExecArgv defaults to none and must be a list of non-empty strings', () => {
+  assert.deepEqual(resolveConfig({ adapter: createLedgerAdapter() }).workerExecArgv, []);
+  assert.deepEqual(resolveConfig({ adapter: createLedgerAdapter(), workerExecArgv: ['--import', 'tsx'] }).workerExecArgv, ['--import', 'tsx']);
+  assert.throws(() => resolveConfig({ adapter: createLedgerAdapter(), workerExecArgv: '--import tsx' } as never), ConfigError);
+  assert.throws(() => resolveConfig({ adapter: createLedgerAdapter(), workerExecArgv: [''] }), ConfigError);
+  assert.throws(() => resolveConfig({ adapter: createLedgerAdapter(), workerExecArgv: [42] } as never), ConfigError);
+});
+
 test('report schema rejects an incomplete report', () => {
   assert.ok(validateReport({ schemaVersion: 1 }).length > 0);
 });
