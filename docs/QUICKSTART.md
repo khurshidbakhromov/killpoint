@@ -1,6 +1,6 @@
 # Quickstart
 
-Requirements: Linux (or WSL2), Node.js 24, Docker Engine with the Compose plugin. The first run pulls `redis:8.10.2-alpine` and `postgres:18.6-alpine`.
+Requirements: Linux (or WSL2), Node.js 24 or 26, Docker Engine with the Compose plugin. The first run pulls `redis:8.10.2-alpine` and `postgres:18.6-alpine`.
 
 ```bash
 git clone <this repository> killpoint && cd killpoint

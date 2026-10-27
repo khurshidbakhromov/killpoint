@@ -86,6 +86,21 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 - 0 inconclusive, 0 reruns, 0 owned containers left afterwards.
 - Durations: min 3440, median 6651, max 7711 ms.
 
+## Node 26 (2026-10-26)
+
+Node 26.12.1 with npm 11.20.0, locally on WSL2 (Docker Engine 29.8.1, Compose 5.5.1), on the otherwise unchanged current stack. The tree contained the uncommitted Node 26 changes, so the run manifests record `gitDirty: true`.
+- `npm ci`: exit 0. npm 11.20 did not run the optional `msgpackr-extract` install script, which is not approved by default; msgpackr falls back to its pure-JS path;
+- `npm run typecheck`: clean (with `@types/node` 24.19.2);
+- `npm test`: 46/46 unit and 15/15 integration pass;
+- `demo --compare`: PASS / VIOLATION / PASS, exit 0;
+- `npm run test:consumer`: idempotent S1 PASS, exit 0;
+- `doctor`: all checks ok, `Node 26.12.1 (tested major)`;
+- A15, `node dist/scripts/repeatability.js 10 docs/evidence/repeatability-2026-10-26-node26.json`: **30/30 matched expectations**, 0 inconclusive, 0 reruns, 0 owned containers left. Durations: min 3362, median 7456, max 9025 ms.
+
+CI now runs the same sequence on Node 24 and 26.
+
+On 2026-10-27 the A16 Optio harness was repeated on Node 26.12.1: 15/15 valid runs with the same outcomes as on Node 24 (`docs/evidence/a16-optio/repeat-node26.json`). See [validation/A16-optio.md](validation/A16-optio.md).
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |
@@ -104,12 +119,12 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 | A12 missing Docker / unsupported OS | **Verified** | `win32` and `darwin` preflight fail; missing docker binary gives ERROR, exit 2; plus the real Docker outage noted above |
 | A13 redaction and cleanup scope | **Verified** | the run's real PostgreSQL password and a sentinel are absent from every default artifact while `stderr.log` shows `[REDACTED]`; an unrelated labelled Docker network survived |
 | A14 packed consumer | **Verified** (local) | `tests/consumer/smoke.sh` |
-| A15 repeatability | **Verified** (local) | Original stack: 30/30, min 3441 / median 6664 / max 8571 ms (`docs/evidence/repeatability.json`). Current stack (2026-10-26): 30/30, min 3440 / median 6651 / max 7711 ms (`docs/evidence/repeatability-2026-10-26.json`). No inconclusive runs, no reruns |
-| A16 real application | **Partially verified** | Integrated locally with one open-source application, Optio (MIT, commit `e1ff7fa`), with 0 lines of Optio changed. Its real schedule-trigger sweep gives PASS ×5 under the crash; a split-transaction mutation of its functions gives VIOLATION ×5 (lost occurrence). One killpoint change was needed (`workerExecArgv`). See [validation/A16-optio.md](validation/A16-optio.md). Adoption by an independent user or team is still **not** shown |
+| A15 repeatability | **Verified** (local) | Original stack: 30/30, min 3441 / median 6664 / max 8571 ms (`docs/evidence/repeatability.json`). Current stack (2026-10-26): 30/30, min 3440 / median 6651 / max 7711 ms (`docs/evidence/repeatability-2026-10-26.json`). Node 26.12.1: 30/30, min 3362 / median 7456 / max 9025 ms (`docs/evidence/repeatability-2026-10-26-node26.json`). No inconclusive runs, no reruns |
+| A16 real application | **Partially verified** | Integrated locally with one open-source application, Optio (MIT, commit `e1ff7fa`), with 0 lines of Optio changed. Its real schedule-trigger sweep gives PASS ×5 under the crash; a split-transaction mutation of its functions gives VIOLATION ×5 (lost occurrence). One killpoint change was needed (`workerExecArgv`). Repeated on Node 26.12.1 with the same results. See [validation/A16-optio.md](validation/A16-optio.md). Adoption by an independent user or team is still **not** shown |
 
 ## Not verified
 
-- macOS, other Node majors, other BullMQ/Redis/PostgreSQL versions.
+- macOS, Node majors other than 24 and 26, other BullMQ/Redis/PostgreSQL versions.
 - BullMQ default (30 s) lock timings: only the short test timings were exercised.
 - The optional split-transaction regression fixture was not built.
 - All recorded runs predate the initial commit, so their `manifest.source.gitCommit` is `null`; new runs record the commit and dirty flag.
@@ -117,4 +132,4 @@ Dependabot PR #3 had also moved `@types/node` to 26.6.5. That failed typecheck (
 
 ## Open items and blockers
 
-1. A16 remainder: an integration by someone other than killpoint's author; a real application that has the duplicate bug; Node 26 support (Optio requires it).
+1. A16 remainder: an integration by someone other than killpoint's author; a real application that has the duplicate bug.

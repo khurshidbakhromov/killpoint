@@ -33,7 +33,7 @@ node dist/src/cli.js doctor
 node dist/src/cli.js demo --compare     # baseline PASS, unsafe VIOLATION, idempotent PASS
 ```
 
-Requirements: Linux or WSL2, Node 24, Docker Engine with Compose v2+. Full guide: [docs/QUICKSTART.md](docs/QUICKSTART.md).
+Requirements: Linux or WSL2, Node 24 or 26, Docker Engine with Compose v2+. Full guide: [docs/QUICKSTART.md](docs/QUICKSTART.md).
 
 ## Outcomes
 

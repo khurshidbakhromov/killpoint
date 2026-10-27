@@ -24,7 +24,7 @@ Out of scope for now: a web UI, hosted services, AI-generated summaries, automat
 
 ## Development setup
 
-Requirements: Linux or WSL2, Node.js 24, and Docker Engine with the Compose plugin.
+Requirements: Linux or WSL2, Node.js 24 or 26, and Docker Engine with the Compose plugin.
 
 ```bash
 npm ci
@@ -60,7 +60,7 @@ These come from the project's design. Reviews will hold to them.
 - Keep PRs focused. One logical change per PR.
 - Add or update tests. Bug fixes need a test that fails without the fix.
 - Update the docs (`README.md` and `docs/`) when behaviour, the CLI or the schemas change, and add an entry under **Unreleased** in [CHANGELOG.md](CHANGELOG.md).
-- CI must pass. It runs typecheck, unit tests, integration tests, the demo comparison and the packed-consumer test on `ubuntu-24.04`.
+- CI must pass. It runs typecheck, unit tests, integration tests, the demo comparison and the packed-consumer test on `ubuntu-24.04` with Node 24 and 26.
 - `main` is protected: every change goes through a pull request with green CI.
 
 Commit messages: an imperative summary line of 72 characters or fewer (for example "Reject checkpoint messages without a job id"), then a blank line and the reason for the change if it isn't obvious.

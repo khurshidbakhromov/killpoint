@@ -5,10 +5,14 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 ## [Unreleased]
 
 ### Added
+- Node 26 support: `engines` is `>=24 <27`, preflight treats Node 26 as a tested major, and CI runs on Node 24 and 26.
 - A16 partial validation against Optio (MIT), using a harness in `docs/validation/a16-optio/` with evidence in `docs/evidence/a16-optio/`.
 - `workerExecArgv` config option: Node flags for worker processes, for example `['--import', 'tsx']` for monorepos that export TypeScript source. Recorded in the manifest.
 - A15 repeatability record on the current stack: 30/30 (`docs/evidence/repeatability-2026-10-26.json`).
 - Repository community files: contributing guide, Code of Conduct (Contributor Covenant 2.1), security policy, support guide, issue and PR templates, CODEOWNERS and Dependabot configuration.
+
+### Fixed
+- The A16 Optio harness passed `OPTIO_API` to workers through the environment, which killpoint does not forward, so its documented reproduce steps failed. The path now reaches workers through a file.
 
 ### Changed
 - Test services: Redis 7.4.7 → 8.10.2 and PostgreSQL 17.7 → 18.6. The PostgreSQL tmpfs moved to `/var/lib/postgresql`, which the 18 image requires.

@@ -1,7 +1,7 @@
 import { accessSync, constants, mkdirSync, readFileSync } from 'node:fs';
 import { run } from './exec.js';
 
-export const SUPPORTED_NODE_MAJORS = [24];
+export const SUPPORTED_NODE_MAJORS = [24, 26];
 
 export interface PreflightCheck {
   id: string;

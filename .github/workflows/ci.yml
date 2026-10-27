@@ -4,15 +4,20 @@ on:
   pull_request:
 
 jobs:
-  test:
-    # Initial supported CI environment for v0.1: Linux x64, Node 24, Docker Engine + Compose v2+.
+  node:
+    # Supported CI environment for v0.1: Linux x64, Node 24 and 26, Docker Engine + Compose v2+.
+    name: test (${{ matrix.node }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [24, 26]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
       - run: npm run typecheck
@@ -33,6 +38,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: killpoint-runs
+          name: killpoint-runs-node${{ matrix.node }}
           path: .killpoint/
           if-no-files-found: ignore
+
+  test:
+    # Branch protection requires a check named "test"; it passes only if every Node version passed.
+    needs: node
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - run: test "${{ needs.node.result }}" = success
