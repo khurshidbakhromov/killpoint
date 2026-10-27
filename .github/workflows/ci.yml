@@ -4,8 +4,9 @@ on:
   pull_request:
 
 jobs:
-  test:
+  node:
     # Supported CI environment for v0.1: Linux x64, Node 24 and 26, Docker Engine + Compose v2+.
+    name: test (${{ matrix.node }})
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -40,3 +41,11 @@ jobs:
           name: killpoint-runs-node${{ matrix.node }}
           path: .killpoint/
           if-no-files-found: ignore
+
+  test:
+    # Branch protection requires a check named "test"; it passes only if every Node version passed.
+    needs: node
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - run: test "${{ needs.node.result }}" = success
