@@ -8,8 +8,8 @@ updates:
     # Exact versions are pinned on purpose; each bump must pass the real-infrastructure CI.
     versioning-strategy: increase
     ignore:
-      # Typings must match the supported Node runtime (24.x); newer majors describe
-      # APIs the tested runtime does not have (e.g. @types/node 26 made process.disconnect optional).
+      # Typings must match the oldest supported Node runtime (24.x); newer majors describe
+      # APIs that runtime does not have (e.g. @types/node 26 made process.disconnect optional).
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
     groups:

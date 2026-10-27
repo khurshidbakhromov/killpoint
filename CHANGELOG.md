@@ -5,6 +5,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 ## [Unreleased]
 
 ### Added
+- Node 26 support: `engines` is `>=24 <27`, preflight treats Node 26 as a tested major, and CI runs on Node 24 and 26.
 - A16 partial validation against Optio (MIT), using a harness in `docs/validation/a16-optio/` with evidence in `docs/evidence/a16-optio/`.
 - `workerExecArgv` config option: Node flags for worker processes, for example `['--import', 'tsx']` for monorepos that export TypeScript source. Recorded in the manifest.
 - A15 repeatability record on the current stack: 30/30 (`docs/evidence/repeatability-2026-10-26.json`).
