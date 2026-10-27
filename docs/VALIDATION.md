@@ -99,6 +99,8 @@ Node 26.12.1 with npm 11.20.0, locally on WSL2 (Docker Engine 29.8.1, Compose 5.
 
 CI now runs the same sequence on Node 24 and 26.
 
+On 2026-10-27 the A16 Optio harness was repeated on Node 26.12.1: 15/15 valid runs with the same outcomes as on Node 24 (`docs/evidence/a16-optio/repeat-node26.json`). See [validation/A16-optio.md](validation/A16-optio.md).
+
 ## Acceptance matrix
 
 | ID | Status | Evidence |
@@ -118,7 +120,7 @@ CI now runs the same sequence on Node 24 and 26.
 | A13 redaction and cleanup scope | **Verified** | the run's real PostgreSQL password and a sentinel are absent from every default artifact while `stderr.log` shows `[REDACTED]`; an unrelated labelled Docker network survived |
 | A14 packed consumer | **Verified** (local) | `tests/consumer/smoke.sh` |
 | A15 repeatability | **Verified** (local) | Original stack: 30/30, min 3441 / median 6664 / max 8571 ms (`docs/evidence/repeatability.json`). Current stack (2026-10-26): 30/30, min 3440 / median 6651 / max 7711 ms (`docs/evidence/repeatability-2026-10-26.json`). Node 26.12.1: 30/30, min 3362 / median 7456 / max 9025 ms (`docs/evidence/repeatability-2026-10-26-node26.json`). No inconclusive runs, no reruns |
-| A16 real application | **Partially verified** | Integrated locally with one open-source application, Optio (MIT, commit `e1ff7fa`), with 0 lines of Optio changed. Its real schedule-trigger sweep gives PASS ×5 under the crash; a split-transaction mutation of its functions gives VIOLATION ×5 (lost occurrence). One killpoint change was needed (`workerExecArgv`). See [validation/A16-optio.md](validation/A16-optio.md). Adoption by an independent user or team is still **not** shown |
+| A16 real application | **Partially verified** | Integrated locally with one open-source application, Optio (MIT, commit `e1ff7fa`), with 0 lines of Optio changed. Its real schedule-trigger sweep gives PASS ×5 under the crash; a split-transaction mutation of its functions gives VIOLATION ×5 (lost occurrence). One killpoint change was needed (`workerExecArgv`). Repeated on Node 26.12.1 with the same results. See [validation/A16-optio.md](validation/A16-optio.md). Adoption by an independent user or team is still **not** shown |
 
 ## Not verified
 
@@ -130,4 +132,4 @@ CI now runs the same sequence on Node 24 and 26.
 
 ## Open items and blockers
 
-1. A16 remainder: an integration by someone other than killpoint's author; a real application that has the duplicate bug; re-running the Optio harness on Node 26, which Optio requires (killpoint itself now supports Node 26, but the Optio runs were recorded on Node 24.22.1).
+1. A16 remainder: an integration by someone other than killpoint's author; a real application that has the duplicate bug.
